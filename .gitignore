@@ -14,3 +14,5 @@ dist/
 # local working notes
 MODLOG.md
 MODDING_PLAN.md
+graphics/node_modules/
+graphics/out/

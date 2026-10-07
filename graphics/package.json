@@ -1,0 +1,19 @@
+{
+  "name": "synthex-graphics",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "banner": "remotion still src/index.ts Banner ../docs/banner.png",
+    "features": "remotion still src/index.ts Features ../docs/features.png",
+    "banner:gif": "remotion render src/index.ts BannerAnimated ../docs/banner.gif --codec=gif --every-nth-frame=2 --scale=0.75"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.532",
+    "@remotion/google-fonts": "^4.0.532",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.532",
+    "typescript": "^7.0.2"
+  }
+}

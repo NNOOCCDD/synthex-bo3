@@ -1,3 +1,5 @@
+![SYNTHEX.VIP — mod menu for Call of Duty: Black Ops III](docs/banner.gif)
+
 # SYNTHEX.VIP
 
 An in-game mod menu for **Call of Duty: Black Ops III** — Zombies and Multiplayer custom games, offline or in
@@ -35,6 +37,8 @@ Settings save to disk under **Player → Config** (`players/mods/synthex/synthex
 **Auto-Load On Start** so your setup comes back every game. Zombies and Multiplayer are saved separately.
 
 ## Features
+![The eight menu tabs](docs/features.png)
+
 **Player** — God Mode, Demi-God, infinite ammo / equipment / hero weapon, max health and regen, points or score,
 weapon tools (Pack-a-Punch, alt ammo, drop/take). **Movement**: speed, Super Jump, Infinite Jump, double jump
 anywhere, No Clip fly. **Camera**: third person, FOV, hide HUD, photo mode. **Overlay**: a small stats box in any corner — pick the
@@ -69,6 +73,9 @@ built-in self-test that runs every option once.
 The mod is made with Treyarch's official **Black Ops III Mod Tools**. The menu UI is Lua, which the stock
 linker refuses to compile, so you also need **L3akMod** (D3V Team, tested with v1.0.4) installed into the Mod Tools.
 Full steps for Windows and Linux (Wine) are in [docs/BUILDING.md](docs/BUILDING.md).
+
+The README graphics are made with [Remotion](https://www.remotion.dev) in `graphics/`
+(`npm install`, then `npm run banner`, `npm run features`, `npm run banner:gif`).
 
 Notes for other modders (how the LUI menu talks to GSC, engine limits we hit, workarounds) are in
 [docs/TECHNICAL.md](docs/TECHNICAL.md).
