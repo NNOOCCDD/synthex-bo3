@@ -424,9 +424,9 @@ local function ZMTabs()
 			C( 1, "Style", { CH( "Colour", "esp_c_item", Colors, 3 ), S( "Size", "esp_i_size", { "XS", "S", "M", "L", "XL", "XXL" }, 2 ) } )
 		} },
 		{ id = "chams", label = "Chams", cards = {
-			C( 0, "Zombie Chams", { T( "Enabled", "zc_on" ), CH( "Style", "zc_style", { "Solid", "Through Walls", "Solid + Walls", "Thermal" }, 2 ),
+			C( 0, "Zombie Chams", { T( "Enabled", "zc_on" ), CH( "Style", "zc_style", { "Solid", "Through Walls", "Solid + Walls", "Thermal", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" }, 2 ),
 				CH( "Colour", "zc_col", { "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple" }, 0 ) } ),
-			C( 1, "About", { N( "Solid: zombies drawn in one flat colour." ), N( "Through Walls: coloured silhouette you can see through walls." ), N( "Thermal: heat-vision look." ) } )
+			C( 1, "About", { N( "Solid: zombies drawn in one flat colour." ), N( "Through Walls: coloured silhouette you can see through walls." ), N( "Thermal: heat-vision look." ), N( "Rim Glow, Glitch, Hex Shimmer, Flow, Hacked: animated game shaders." ) } )
 		} }
 	} } )
 

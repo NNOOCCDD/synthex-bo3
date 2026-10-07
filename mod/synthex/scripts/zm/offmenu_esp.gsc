@@ -90,12 +90,13 @@ function build_tab()
 	self offmenu::side( "esp", "chams", "Chams" );
 	self offmenu::card( 0, "Zombie Chams" );
 	self offmenu::toggle( "Enabled", "zc_on", &toggle_chams );
-	self offmenu::choice( "Style", "zc_style", array( 1, 2, 4, 3 ), array( "Solid", "Through Walls", "Solid + Walls", "Thermal" ), 2, &chams_changed );
+	self offmenu::choice( "Style", "zc_style", array( 1, 2, 4, 3, 5, 6, 7, 8, 9 ), array( "Solid", "Through Walls", "Solid + Walls", "Thermal", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" ), 2, &chams_changed );
 	self offmenu::choice( "Colour", "zc_col", array( 0, 1, 2, 3, 4, 5, 6 ), array( "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple" ), 0, &chams_changed );
 	self offmenu::card( 1, "About" );
 	self offmenu::note( "Solid: zombies drawn in one flat colour." );
 	self offmenu::note( "Through Walls: coloured silhouette you can see through walls." );
 	self offmenu::note( "Thermal: heat-vision look." );
+	self offmenu::note( "Rim Glow, Glitch, Hex Shimmer, Flow, Hacked: animated game shaders." );
 
 	// defaults (first build only)
 	if ( !isdefined( self.offm_state[ "esp_init" ] ) )
