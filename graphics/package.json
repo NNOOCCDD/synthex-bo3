@@ -6,6 +6,7 @@
     "banner": "remotion still src/index.ts Banner ../docs/banner.png",
     "features": "remotion still src/index.ts Features ../docs/features.png",
     "clip": "bash scripts/clip-gif.sh",
+    "montage": "bash scripts/montage-gif.sh",
     "banner:gif": "remotion render src/index.ts BannerAnimated ../docs/banner.gif --codec=gif --every-nth-frame=2 --scale=0.75"
   },
   "dependencies": {

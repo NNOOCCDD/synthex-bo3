@@ -7,6 +7,8 @@ your own private matches. Mouse-driven, wide layout, dark charcoal + dusty pink.
 
 ![The menu in Zombies (Der Eisendrache)](docs/menu.jpg)
 
+<p align="center"><img src="docs/montage.gif" width="640" alt="Gun features in action: universal camo, rapid fire, rainbow gun chams, explosive bullets, zombie chams"></p>
+
 > **Offline / private only.** The menu turns itself off in public matchmaking and only the host gets it.
 > BO3 mods can't be loaded in public matches anyway. Please don't use it to ruin other people's games.
 
