@@ -255,10 +255,13 @@ function private world_size( px, d )
 	return int( max( 1, px * max( d, 1 ) / ESP_PX_SCALE + 0.5 ) );
 }
 
-function private set_marker_size( m, material, w, h )
+function private set_marker_size( m, material, w, h, force )
 {
-	// only resize on a real change (>15%), each resize rebuilds the waypoint
-	if ( isdefined( m.offm_ws ) && isdefined( m.offm_hs ) && abs( m.offm_ws - w ) <= m.offm_ws * 0.15 && abs( m.offm_hs - h ) <= m.offm_hs * 0.15 )
+	// distance changes: only resize on a real change (>15%), each resize rebuilds the waypoint.
+	// force: always resize (health bars must follow every hit)
+	if ( !IS_TRUE( force ) && isdefined( m.offm_ws ) && isdefined( m.offm_hs ) && abs( m.offm_ws - w ) <= m.offm_ws * 0.15 && abs( m.offm_hs - h ) <= m.offm_hs * 0.15 )
+		return;
+	if ( m.offm_ws === w && m.offm_hs === h )
 		return;
 	if ( !isdefined( m.offm_target ) || IsAlive( m.offm_target ) )
 	{
@@ -370,13 +373,23 @@ function private esp_loop()
 				{
 					b = self make_marker( c.ai, m.offm_z, "white", 1, ( 0.4, 0.95, 0.5 ), alpha, false, false, true );
 				}
+				// highest health seen counts as full (specials and bosses don't always set maxhealth)
+				top = c.ai.health;
+				if ( isdefined( c.ai.maxhealth ) && c.ai.maxhealth > top )
+					top = c.ai.maxhealth;
+				if ( isdefined( c.ai.offm_maxhp ) && c.ai.offm_maxhp > top )
+					top = c.ai.offm_maxhp;
+				c.ai.offm_maxhp = top;
 				frac = 1.0;
-				if ( isdefined( c.ai.maxhealth ) && c.ai.maxhealth > 0 )
-					frac = max( 0.05, min( 1.0, c.ai.health / c.ai.maxhealth ) );
+				if ( top > 0 )
+					frac = max( 0.05, min( 1.0, c.ai.health / top ) );
 				// bar: 3x the marker width at full health, sits just above the marker
 				bw = world_size( max( 3, size * 3 ) * frac, c.d );
 				bh = world_size( max( 1.5, size * 0.3 ), c.d );
-				set_marker_size( b, "white", bw, bh );
+				// the width follows health exactly; only distance-only changes use the 15% rule
+				hp_changed = !isdefined( b.offm_frac ) || abs( b.offm_frac - frac ) > 0.02;
+				b.offm_frac = frac;
+				set_marker_size( b, "white", bw, bh, hp_changed );
 				b.z = m.offm_z + ws * 0.5 + bh + world_size( 2, c.d );
 				b.color = ( 1 - frac, 0.35 + 0.6 * frac, 0.35 );
 				b.alpha = alpha;
