@@ -244,7 +244,7 @@ function private build_player_tab()
 	self offmenu::card( 3, "Weapon" );
 	self offmenu::stat( "Holding", &st_holding );
 	self offmenu::button( "Refill", &offmenu_common::max_ammo_all );
-	self offmenu::button( "Drop", &drop_current );
+	self offmenu::button( "Drop Weapon", &drop_current );
 
 	self offmenu_common::build_movement( "player" );
 	self offmenu_common::build_camera( "player" );

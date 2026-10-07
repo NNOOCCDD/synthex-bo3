@@ -12,7 +12,7 @@ USE
   Open:   hold Aim + press Melee
   Close:  V or Backspace (controller: B). Not Esc.
   Mouse:  click everything. Keys: Q/E tabs, A/D sides, W/S move, F select, Z/X or wheel change values.
-  Save your settings: Player > Config > Save Config (auto-loads every game).
+  Save your settings: Lobby > Menu > Save Config (auto-loads every game).
 
 UNINSTALL
   Remove "+set fs_game synthex" from the launch options (and delete mods\synthex if you like).

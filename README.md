@@ -33,42 +33,38 @@ To play without the mod again, remove `+set fs_game synthex` from the launch opt
 | **Mouse** | click tabs, side tabs, toggles, buttons and the `‹ ›` arrows on sliders |
 | **Keys** | Q / E tabs · A / D side tabs · W / S move · F select · Z / X or mouse wheel change a value |
 
-Settings save to disk under **Player → Config** (`players/mods/synthex/synthex_config.txt`), with
+Settings save to disk under **Lobby → Menu** (`players/mods/synthex/synthex_config.txt`), with
 **Auto-Load On Start** so your setup comes back every game. Zombies and Multiplayer are saved separately.
 
 ## Features
 ![The eight menu tabs](docs/features.png)
 
-**Player** — God Mode, Demi-God, infinite ammo / equipment / hero weapon, max health and regen, points or score,
-weapon tools (Pack-a-Punch, alt ammo, drop/take). **Movement**: speed, Super Jump, Infinite Jump, double jump
-anywhere, No Clip fly. **Camera**: third person, FOV, hide HUD, photo mode. **Overlay**: a small stats box in any corner — pick the
-stats, size and opacity. **Position**: save/load positions, quick teleports. **Config**: save/load settings.
+**Player** — **Survival**: God Mode, Demi-God, Zombies Ignore Me / Always UAV, Invisible, max health and regen,
+instant revive and infinite downs, quick actions. **Movement**: speed, Super Jump, Infinite Jump, double jump
+anywhere, No Clip fly. **Camera**: third person, FOV, hide HUD, photo mode. (MP: **Score**.)
 
-**Weapons** — every weapon on the map by category, Pack-a-Punched versions, attachments (MP), current loadout.
-**Camo**: one camo on every gun you hold (103 of the game's camos — Dark Matter, Diamond, Gold, every Pack-a-Punch
-camo, animated Black Market ones, …) plus a separate knife camo.
+**Weapons** — every weapon on the map by category, Pack-a-Punched versions. **Loadout**: Pack-a-Punch / un-pack,
+alt ammo, drop or take, infinite ammo. **Mods**: Rapid Fire (5–40 shots/s, snipers too), No Recoil, fast reload,
+explosive and magic bullets, Headshots Only, Every Shot Hits Head, aim assist on zombies. **Camo**: one camo on every
+gun (103 of the game's camos), knife camo, and gun chams. (MP: **Attachments**.)
 
-**Zombies** (Zombies mode) — points, all perks, classic and mega Gobblegums, power-ups, rounds (skip, jump to,
-freeze), map tools (open all doors, power on, Mystery Box / Pack-a-Punch), zombie spawning and speed, revive tools
-(instant revive, infinite downs).
+**Zombies** — points, perks, classic and mega Gobblegums, power-ups, rounds (skip, jump to, freeze, zombie speed),
+map (power, doors, box, Pack-a-Punch), **Chaos**: exploding zombies, zombie launcher, Force Push.
 
-**ESP** (Zombies mode, AI zombies and map items only) — markers above zombie heads with distance and a health
-bar; styles, sizes, colours per enemy type, through walls, edge arrows, max distance; Mystery Box, Pack-a-Punch,
-perks, wall weapons, buildable parts and power-ups. **Chams**: zombies drawn solid, through walls, with a rim glow or
-animated glitch / hex shimmer / flow / hacked shaders, in 7 colours or a cycling rainbow with adjustable speed.
+**Visuals** — **Zombie ESP** (markers above heads with distance and health bars, style, colours, through walls,
+edge arrows), **Item ESP** (box, Pack-a-Punch, perks, wall weapons, parts, power-ups), **Zombie Chams** (solid,
+through walls, rim glow, glitch, hex shimmer, flow, hacked, thermal — 7 colours or a rainbow with adjustable speed),
+**Screen Filters**, and the **Overlay** stats box.
 
-**Fun** — explosive bullets, magic bullets, **Rapid Fire** (5–40 shots/s, any gun, snipers too), No Recoil,
-fast reload, Headshots Only and Every Shot Hits Head (Zombies), Forge mode, airstrike at the crosshair,
-Force Push, Gun Game (MP: for you and the bots), random weapon each round, auto Pack-a-Punch, exploding zombies,
-zombie launcher, aim assist on zombies, clones (MP).
+**Teleport** — saved positions, map spots (Pack-a-Punch, box, perk machines, power), teleport gun, bring players.
 
-**World** — slow motion and game speed, gravity, jump height, movement speed for everyone, screen filters
-(frost, glitch, underwater, rain, EMP, …).
+**Fun** — airstrike at the crosshair, Gun Game (MP: for you and the bots), random weapon each round, auto
+Pack-a-Punch, Forge mode, clones (MP).
 
-**Teleport** — map spots (Pack-a-Punch, box, perk machines, power), teleport gun, saved positions.
+**World** — slow motion and game speed, gravity, jump height, movement speed for everyone, round delay / match timer.
 
-**Lobby** — players, match control, restart / end game (MP: add bots, freeze, bring or kick them), and a
-built-in self-test that runs every option once.
+**Lobby** — players, session control (restart, end), MP bots, and **Menu**: save / load your config with
+auto-load, welcome hint, built-in self-test.
 
 <img src="docs/overlay.jpg" width="300" alt="Stats overlay">
 

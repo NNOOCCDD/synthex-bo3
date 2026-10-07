@@ -751,7 +751,7 @@ function selftest()
 	self notify( "offm_selftest" );
 	self endon( "offm_selftest" );
 	skip = array( "Suicide", "Kill", "End Game", "Restart Map", "Fast Restart", "Kick", "Kick All Bots", "Take All Weapons",
-		"Take", "Take Current", "Drop", "Drop Current", "To Sky (+2000)", "Run Self-Test", "Remove All", "Give All", "Add",
+		"Take", "Take Current", "Drop", "Drop Current", "Drop Weapon", "Take Weapon", "To Sky (+2000)", "Run Self-Test", "Remove All", "Give All", "Add",
 		"Upgrade All", "Give 10,000 Points", "Give All Perks", "Revive", "Freeze", "Unfreeze",
 		// would change the match itself (rounds, points, doors, power) or move the player
 		"Apply", "Skip 1", "Skip 5", "Reset to 500", "Open All Doors & Debris", "Turn On Power", "Load", "Back to Spawn",

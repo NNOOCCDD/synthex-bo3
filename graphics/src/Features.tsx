@@ -16,14 +16,14 @@ const ICONS: Record<string, React.ReactNode> = {
 };
 
 const TABS: { key: string; title: string; lines: string[] }[] = [
-	{ key: "player", title: "Player", lines: ["God Mode, infinite ammo", "Super + Infinite Jump", "No Clip, saved config"] },
-	{ key: "weapons", title: "Weapons", lines: ["Every weapon on the map", "Pack-a-Punched versions", "Attachments, loadouts"] },
-	{ key: "zombies", title: "Zombies", lines: ["Perks + mega Gobblegums", "Power-ups, rounds, points", "Doors, power, revives"] },
-	{ key: "esp", title: "ESP", lines: ["Markers over zombie heads", "Distance + health bars", "Box, PaP, perks, parts"] },
+	{ key: "player", title: "Player", lines: ["God Mode, instant revive", "Super + Infinite Jump", "No Clip, third person"] },
+	{ key: "weapons", title: "Weapons", lines: ["Every weapon, PaP versions", "Rapid Fire, No Recoil", "Camos + gun chams"] },
+	{ key: "zombies", title: "Zombies", lines: ["Perks + mega Gobblegums", "Power-ups, rounds, points", "Doors, power, chaos"] },
+	{ key: "esp", title: "Visuals", lines: ["Zombie + item ESP", "Chams, rainbow cycling", "Screen filters, overlay"] },
 	{ key: "teleport", title: "Teleport", lines: ["Map spots in one click", "Teleport gun", "Saved positions"] },
-	{ key: "fun", title: "Fun", lines: ["Rapid Fire, No Recoil", "Explosive + magic bullets", "Gun Game, airstrikes"] },
-	{ key: "world", title: "World", lines: ["Slow motion, game speed", "Gravity, jump height", "Screen filters"] },
-	{ key: "lobby", title: "Lobby", lines: ["Bots: add, freeze, kick", "Restart or end the game", "Built-in self-test"] },
+	{ key: "fun", title: "Fun", lines: ["Airstrikes, Gun Game", "Random weapon, auto PaP", "Forge mode, clones"] },
+	{ key: "world", title: "World", lines: ["Slow motion, game speed", "Gravity, jump height", "Round delay, timers"] },
+	{ key: "lobby", title: "Lobby", lines: ["Players + bots", "Restart or end the game", "Saved config, self-test"] },
 ];
 
 const Card: React.FC<{ tab: (typeof TABS)[number] }> = ({ tab }) => (

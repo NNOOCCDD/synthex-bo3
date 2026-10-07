@@ -34,6 +34,13 @@ export WINEDLLOVERRIDES="msvcr110,msvcp110=n,b"
 
 # The linker doesn't notice a missing local function (&fn); the game then refuses to load the mod.
 python3 "$REPO/tools/check_refs.py" || { echo "Fix the missing functions above before building." >&2; exit 1; }
+# Menu layout vs script buttons/options (needs a Python with lupa: set LAYOUT_PY, or pip install lupa)
+LAYOUT_PY="${LAYOUT_PY:-python3}"
+if "$LAYOUT_PY" -c "import lupa" 2>/dev/null; then
+	"$LAYOUT_PY" "$REPO/tools/check_layout.py" || { echo "Fix the menu layout problems above before building." >&2; exit 1; }
+else
+	echo "(layout check skipped: no lupa - pip install lupa, or set LAYOUT_PY)"
+fi
 
 # The linker reads mods/<MOD>/ under the tools root; point it at the repo copy.
 mkdir -p "$TOOLS/mods"

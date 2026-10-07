@@ -166,12 +166,49 @@ local function PositionSide( id, label )
 	} }
 end
 
-local function ConfigSide()
-	return { id = "config", label = "Config", cards = {
+-- Buttons the script answers under another page: home = "tab/side" there (see Send in synthex_menu.lua).
+-- Lets the layout here move freely while the script keeps its own structure.
+local function Home( home, card )
+	for _, r in ipairs( card.rows ) do
+		if r.k == "button" and not r.home then r.home = home end
+	end
+	return card
+end
+
+-- Lobby > Menu: saved config + menu options. sessionHome = where the script keeps "Run Self-Test".
+local function MenuSide( sessionHome )
+	return { id = "menu", label = "Menu", cards = {
 		C( 0, "Config", { LB( "Save Config" ), LB( "Load Config" ), LT( "Auto-Load On Start", "cfg_auto", "every game" ), LB( "Reset To Defaults", true ) } ),
-		C( 1, "Status", { ST( "Storage", "cfg_store" ), ST( "Last Action", "cfg_last" ) } ),
-		C( 2, "About", { N( "Saves every toggle and slider (Zombies and Multiplayer separately)." ), N( "Not saved: positions, No Clip, Forge, round / time freezes." ) } )
+		C( 0, "Status", { ST( "Storage", "cfg_store" ), ST( "Last Action", "cfg_last" ) } ),
+		Home( sessionHome, C( 1, "Menu", { T( "Hide Welcome Hint", "nohint" ), B( "Run Self-Test" ) } ) ),
+		C( 2, "About Config", { N( "Saves every toggle and slider," ), N( "Zombies and Multiplayer apart." ), N( "Not saved: positions, No Clip," ), N( "Forge, round / time freezes." ) } )
 	} }
+end
+
+local function FiltersSide()
+	return { id = "filters", label = "Screen Filters", cards = {
+		C( 0, "Screen Filter", { CH( "Filter", "filter", { "None", "Frost", "Glitch", "Overdrive", "Underwater", "Rain", "Radial Blur", "Speed Burst", "Static", "EMP" }, 0 ) } )
+	} }
+end
+
+-- Weapons > Mods: everything that changes how your guns shoot
+local function ModsSide( zm, magicLabels )
+	local cards = {
+		C( 0, "Rapid Fire", { T( "Rapid Fire", "rapid" ), S( "Fire Rate", "rapid_r", { "5/s", "10/s", "20/s", "40/s" }, 1 ), N( "Hold fire. Snipers too." ) } ),
+		C( 0, "Handling", { T( "No Recoil", "norecoil" ), T( "Fast Reload", "fastreload" ), T( "Fast Weapon Swap", "fastswap" ) } ),
+		C( 1, "Explosive Bullets", { T( "Explosive Bullets", "explo" ), S( "Radius", "explo_r", { "100", "160", "220", "300", "400" }, 2 ), S( "Damage", "explo_d", { "150", "300", "600", "1500", "5000" }, 2 ) } ),
+		C( 1, "Magic Bullets", { T( "Magic Bullets", "magic" ), CH( "Fires", "magic_w", magicLabels, 0 ) } )
+	}
+	if zm then
+		table.insert( cards, C( 2, "Headshots", { T( "Headshots Only", "hsonly" ), T( "Every Shot Hits Head", "autohead" ) } ) )
+		table.insert( cards, C( 2, "Aim Assist", { T( "Aim Assist", "aimassist" ), CH( "Strength", "aim_str", { "Light", "Medium", "Strong" }, 1 ), N( "Zombies only, while aiming." ) } ) )
+	end
+	return { id = "mods", label = "Mods", cards = cards }
+end
+
+local function AmmoCard( col, zm )
+	return C( col, "Ammo", { T( "Infinite Ammo", "ammo" ), T( "Infinite Equipment", "equip" ), T( zm and "Infinite Hero Weapon" or "Infinite Specialist", "hero" ),
+		CH( "Ammo Mode", "ammomode", { "Clip + Stock", "Stock Only" }, 0 ) } )
 end
 
 -- Weapons > Camo (same order as offmenu_camo.gsc)
@@ -213,24 +250,10 @@ local function ToolsSide( bring )
 	} }
 end
 
-local function FunTab( magicLabels, zm )
-	return { id = "fun", label = "Fun", sides = {
-		{ id = "bullets", label = "Bullets", cards = {
-			C( 0, "Explosive Bullets", { T( "Explosive Bullets", "explo" ), S( "Radius", "explo_r", { "100", "160", "220", "300", "400" }, 2 ), S( "Damage", "explo_d", { "150", "300", "600", "1500", "5000" }, 2 ) } ),
-			C( 1, "Magic Bullets", { T( "Magic Bullets", "magic" ), CH( "Fires", "magic_w", magicLabels, 0 ) } ),
-			C( 3, "Rapid Fire", { T( "Rapid Fire", "rapid" ), S( "Fire Rate", "rapid_r", { "5/s", "10/s", "20/s", "40/s" }, 1 ), N( "Hold fire: your gun shoots at the crosshair this fast, snipers too." ) } ),
-			C( 2, "Extras", zm and { T( "Fast Reload", "fastreload" ), T( "Fast Weapon Swap", "fastswap" ), T( "No Recoil", "norecoil" ), T( "Headshots Only", "hsonly" ), T( "Every Shot Hits Head", "autohead" ) }
-				or { T( "Fast Reload", "fastreload" ), T( "Fast Weapon Swap", "fastswap" ), T( "No Recoil", "norecoil" ) } )
-		} },
-		{ id = "forge", label = "Forge", cards = {
-			C( 0, "Forge Mode", { T( "Forge Mode", "forge" ), S( "Hold Distance", "forge_d", { "80", "150", "250", "400" }, 1 ), N( "Aim at an object, hold Use to carry." ) } ),
-			C( 1, "Options", { T( "Rotate With View", "forge_rot" ) } )
-		} },
-		{ id = "arsenal", label = "Arsenal", cards = zm and {
-			C( 0, "Airstrike", { B( "Call Airstrike" ), CH( "Rockets", "strike_n", { "3", "6", "10" }, 1 ) } ),
-			C( 1, "Force Push", { T( "Force Push", "forcepush" ), N( "Shots knock zombies flying." ) } )
-		} or {
-			C( 0, "Airstrike", { B( "Call Airstrike" ), CH( "Rockets", "strike_n", { "3", "6", "10" }, 1 ) } )
+local function FunTab( zm )
+	local sides = {
+		{ id = "arsenal", label = "Arsenal", cards = {
+			C( 0, "Airstrike", { B( "Call Airstrike" ), CH( "Rockets", "strike_n", { "3", "6", "10" }, 1 ), N( "Rockets rain on your crosshair." ) } )
 		} },
 		{ id = "modes", label = "Modes", cards = zm and {
 			C( 0, "Gun Game", { T( "Gun Game", "gungame" ), CH( "Kills Per Weapon", "gg_kills", { "1", "3", "5", "10" }, 1 ) } ),
@@ -239,13 +262,15 @@ local function FunTab( magicLabels, zm )
 			C( 0, "Gun Game", { T( "Gun Game", "gungame" ), CH( "Kills Per Weapon", "gg_kills", { "1", "3", "5", "10" }, 1 ) } ),
 			C( 1, "Everyone", { T( "Gun Game For Everyone", "gg_all" ), N( "Bots climb the same ladder." ) } )
 		} },
-		zm and { id = "zombies", label = "Zombies", cards = {
-			C( 0, "Chaos", { T( "Exploding Zombies", "explodezm" ), B( "Launch All Zombies" ) } ),
-			C( 1, "Aim Assist", { T( "Aim Assist", "aimassist" ), CH( "Strength", "aim_str", { "Light", "Medium", "Strong" }, 1 ), N( "Zombies only, while aiming." ) } )
-		} } or { id = "clone", label = "Clone", cards = {
-			C( 0, "Clone", { B( "Spawn Clone" ), B( "Remove Clones" ) } )
+		{ id = "forge", label = "Forge", cards = {
+			C( 0, "Forge Mode", { T( "Forge Mode", "forge" ), S( "Hold Distance", "forge_d", { "80", "150", "250", "400" }, 1 ), N( "Aim at an object, hold Use to carry." ) } ),
+			C( 1, "Options", { T( "Rotate With View", "forge_rot" ) } )
 		} }
-	} }
+	}
+	if not zm then
+		table.insert( sides, { id = "clone", label = "Clone", cards = { C( 0, "Clone", { B( "Spawn Clone" ), B( "Remove Clones" ) } ) } } )
+	end
+	return { id = "fun", label = "Fun", sides = sides }
 end
 
 local function WorldTab( zm )
@@ -264,9 +289,6 @@ local function WorldTab( zm )
 			C( 0, "Gravity", { T( "Low Gravity", "lowgrav" ), S( "Gravity", "gravity", { "100", "200", "400", "600", "800", "1200" }, 4 ) } ),
 			C( 1, "Jumping (everyone)", { S( "Jump Height", "jump_h", { "39", "60", "100", "200", "400" }, 0 ) } ),
 			C( 2, "Movement (everyone)", { S( "Player Speed", "all_speed", { "1.0x", "1.25x", "1.5x", "2.0x" }, 0 ) } )
-		} },
-		{ id = "filters", label = "Filters", cards = {
-			C( 0, "Screen Filter", { CH( "Filter", "filter", { "None", "Frost", "Glitch", "Overdrive", "Underwater", "Rain", "Radial Blur", "Speed Burst", "Static", "EMP" }, 0 ) } )
 		} }
 	} }
 end
@@ -280,16 +302,18 @@ local function PlayersSide( zm )
 		end
 		if #list == 0 then table.insert( list, N( "No players found." ) ) end
 		local actions = { B( "Bring to Me" ), B( "Go to Player" ), B( "Give God" ), B( "Remove God" ), B( "Freeze" ), B( "Unfreeze" ) }
+		local more = {}
 		if zm then
-			table.insert( actions, B( "Revive" ) ); table.insert( actions, B( "Give 10,000 Points" ) ); table.insert( actions, B( "Give All Perks" ) )
+			more = { B( "Revive" ), B( "Give 10,000 Points" ), B( "Give All Perks" ) }
 		else
-			table.insert( actions, B( "Kick", true ) )
+			more = { B( "Kick", true ) }
 		end
-		table.insert( actions, B( "Kill", true ) )
+		table.insert( more, B( "Kill", true ) )
 		return {
 			C( 0, "Players", list ),
 			C( 1, "Actions", actions ),
-			C( 2, "Selected", { ST( "Name", "selname" ), ST( "Health", "selhp" ), ST( "God Mode", "selgod" ) } )
+			C( 2, "Selected", { ST( "Name", "selname" ), ST( "Health", "selhp" ), ST( "God Mode", "selgod" ) } ),
+			C( 2, "More", more )
 		}
 	end }
 end
@@ -318,26 +342,28 @@ end
 
 local function ZMTabs()
 	local tabs = {}
+	local magic = { "Ray Gun", "GKZ-45 Mk3", "Wunderwaffe", "Thundergun", "XM-53", "L4 Siege" }
 	table.insert( tabs, { id = "player", label = "Player", sides = {
-		{ id = "general", label = "General", cards = {
+		{ id = "general", label = "Survival", cards = {
 			C( 0, "Survival", { T( "God Mode", "god" ), T( "Demi-God", "demigod", "never dies" ), T( "Zombies Ignore Me", "ignoreme" ), T( "Invisible", "invisible" ), T( "Auto Revive", "autorevive" ) } ),
-			C( 0, "Quick Actions", { B( "Max Ammo" ), B( "Full Health" ), B( "All Perks" ), B( "Suicide", true ) } ),
-			C( 1, "Ammo", { T( "Infinite Ammo", "ammo" ), T( "Infinite Equipment", "equip" ), T( "Infinite Hero Weapon", "hero" ), CH( "Ammo Mode", "ammomode", { "Clip + Stock", "Stock Only" }, 0 ) } ),
 			C( 1, "Health", { S( "Max Health", "maxhp", { "100", "150", "250", "500", "1000" }, 0 ), CH( "Regen", "regen", { "Normal", "Fast", "Instant" }, 0 ) } ),
-			C( 2, "Points", { ST( "Current", "points" ), CH( "Amount", "pts_amt", { "1,000", "10,000", "100,000", "1,000,000" }, 1 ), B( "Give" ), B( "Take" ), T( "Lock Points", "lockpts" ) } ),
-			C( 3, "Weapon", { ST( "Holding", "holding" ), B( "Pack-a-Punch" ), B( "Un-Pack" ), B( "Drop" ), B( "Take" ) } )
+			C( 1, "Revive", { T( "Instant Revive", "instarevive" ), T( "Infinite Downs", "infdowns" ), N( "Solo keeps Quick Revive." ) } ),
+			C( 2, "Quick Actions", { B( "Max Ammo" ), B( "Full Health" ), B( "All Perks" ), B( "Suicide", true ) } )
 		} },
-		MovementSide(), CameraSide(), OverlaySide( true ), PositionSide( "position", "Position" ), ConfigSide()
+		MovementSide(), CameraSide()
 	} } )
 
 	table.insert( tabs, { id = "weapons", label = "Weapons", sides = {
 		ZMWeaponSide( "ar", "Assault Rifles" ), ZMWeaponSide( "smg", "SMGs" ), ZMWeaponSide( "shotgun", "Shotguns" ), ZMWeaponSide( "lmg", "LMGs" ),
 		ZMWeaponSide( "sniper", "Snipers" ), ZMWeaponSide( "pistol", "Pistols" ), ZMWeaponSide( "launcher", "Launchers" ), ZMWeaponSide( "wonder", "Wonder Weapons" ),
-		{ id = "upgrades", label = "Upgrades", gun = "pap", cards = {
+		{ id = "upgrades", label = "Loadout", gun = "pap", cards = {
 			C( 0, "Current Weapon", { ST( "Holding", "holding" ), ST( "Upgraded", "upgraded" ), B( "Pack-a-Punch" ), B( "Un-Pack" ) } ),
+			Home( "player/general", C( 0, "Hands", { B( "Drop Weapon" ), B( "Take Weapon" ) } ) ),
 			C( 1, "Alt Ammo", { CH( "Type", "aat", { "Blast Furnace", "Dead Wire", "Fireworks", "Thunder Wall", "Turned" }, 0 ), B( "Apply to Current" ) } ),
-			C( 2, "All Weapons", { B( "Upgrade All" ), B( "Max Ammo All" ), B( "Take All Weapons", true ) } )
+			C( 1, "All Weapons", { B( "Upgrade All" ), B( "Max Ammo All" ), B( "Take All Weapons", true ) } ),
+			AmmoCard( 2, true )
 		} },
+		ModsSide( true, magic ),
 		CamoSide()
 	} } )
 
@@ -401,37 +427,39 @@ local function ZMTabs()
 			C( 2, "Mystery Box", { T( "Free Mystery Box", "freebox" ), B( "Start Fire Sale" ) } ),
 			C( 3, "Pack-a-Punch", { T( "Free Pack-a-Punch", "freepap" ), B( "Teleport to Pack-a-Punch" ) } )
 		} },
-		{ id = "revive", label = "Revive", cards = {
-			C( 0, "Revive", { T( "Instant Revive", "instarevive" ), T( "Infinite Downs", "infdowns" ), N( "Solo keeps Quick Revive." ) } )
+		{ id = "chaos", label = "Chaos", home = "fun/zombies", cards = {
+			C( 0, "Zombies", { T( "Exploding Zombies", "explodezm" ), B( "Launch All Zombies" ) } ),
+			C( 1, "Force Push", { T( "Force Push", "forcepush" ), N( "Shots knock zombies flying." ) } )
 		} }
 	} } )
 
-	table.insert( tabs, { id = "esp", label = "ESP", sides = {
-		{ id = "enemies", label = "Enemies", cards = {
+	table.insert( tabs, { id = "esp", label = "Visuals", sides = {
+		{ id = "enemies", label = "Zombie ESP", cards = {
 			C( 0, "Zombie ESP", { T( "Enabled", "esp_on" ), T( "Through Walls", "esp_walls" ), S( "Max Distance", "esp_dist", { "750", "1,500", "3,000", "6,000", "Any" }, 2 ), S( "Max Markers", "esp_max", { "8", "16", "24", "32" }, 2 ) } ),
 			C( 1, "Show", { T( "Regular Zombies", "esp_reg" ), T( "Crawlers", "esp_crawl" ), T( "Special Enemies", "esp_spec", "dogs, spiders" ), T( "Bosses", "esp_boss", "Margwa, Panzer" ) } ),
 			C( 2, "Live", { ST( "Tracked", "esp_tracked" ), ST( "Nearest", "esp_nearest" ), ST( "Specials", "esp_specials" ), ST( "Out of Range", "esp_out" ) } )
 		} },
-		{ id = "style", label = "Style", cards = {
+		{ id = "style", label = "ESP Style", cards = {
 			C( 0, "Marker", { CH( "Style", "esp_style", { "Diamond", "Dot", "Box", "Skull" }, 0 ), S( "Size", "esp_size", { "XS", "S", "M", "L", "XL", "XXL" }, 2 ), S( "Opacity", "esp_alpha", { "40%", "60%", "85%", "100%" }, 2 ) } ),
 			C( 1, "Colours", { CH( "Regular", "esp_c_reg", Colors, 0 ), CH( "Special", "esp_c_spec", Colors, 1 ), CH( "Boss", "esp_c_boss", Colors, 2 ),
 				T( "Red When Close", "esp_redclose" ), S( "Close Range", "esp_close", { "150", "300", "500", "800" }, 1 ) } )
 		} },
-		{ id = "labels", label = "Labels", cards = {
+		{ id = "labels", label = "ESP Labels", cards = {
 			C( 0, "Labels", { T( "Distance", "esp_l_dist" ), T( "Health Bar", "esp_l_hp" ) } ),
 			C( 1, "Behaviour", { T( "Edge Arrows", "esp_edge", "off-screen" ), T( "Nearest Zombie Only", "esp_nearest" ), T( "Pulse When Close", "esp_pulse" ) } )
 		} },
-		{ id = "items", label = "Map Items", cards = {
+		{ id = "items", label = "Item ESP", cards = {
 			C( 0, "Items", { T( "Mystery Box", "esp_i_box" ), T( "Pack-a-Punch", "esp_i_pap" ), T( "Perk Machines", "esp_i_perks" ), T( "Wall Weapons", "esp_i_wall" ),
 				T( "Buildable Parts", "esp_i_parts" ), T( "Power-Ups On Ground", "esp_i_pow" ) } ),
 			C( 1, "Style", { CH( "Colour", "esp_c_item", Colors, 3 ), S( "Size", "esp_i_size", { "XS", "S", "M", "L", "XL", "XXL" }, 2 ) } )
 		} },
-		{ id = "chams", label = "Chams", cards = {
+		{ id = "chams", label = "Zombie Chams", cards = {
 			C( 0, "Zombie Chams", { T( "Enabled", "zc_on" ), CH( "Style", "zc_style", { "Solid", "Through Walls", "Solid + Walls", "Thermal", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" }, 2 ),
 				CH( "Colour", "zc_col", { "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Rainbow" }, 0 ),
 				S( "Rainbow Speed", "zc_speed", { "Slow", "Normal", "Fast", "Very Fast" }, 1 ) } ),
 			C( 1, "About", { N( "Solid: zombies drawn in one flat colour." ), N( "Through Walls: coloured silhouette you can see through walls." ), N( "Thermal: heat-vision look." ), N( "Rim Glow, Glitch, Hex Shimmer, Flow, Hacked: animated game shaders." ) } )
-		} }
+		} },
+		FiltersSide(), OverlaySide( true )
 	} } )
 
 	table.insert( tabs, { id = "teleport", label = "Teleport", sides = {
@@ -450,15 +478,15 @@ local function ZMTabs()
 		ToolsSide( "All Zombies to Crosshair" )
 	} } )
 
-	table.insert( tabs, FunTab( { "Ray Gun", "GKZ-45 Mk3", "Wunderwaffe", "Thundergun", "XM-53", "L4 Siege" }, true ) )
+	table.insert( tabs, FunTab( true ) )
 	table.insert( tabs, WorldTab( true ) )
 	table.insert( tabs, { id = "lobby", label = "Lobby", sides = {
 		PlayersSide( true ),
 		{ id = "session", label = "Session", cards = {
 			C( 0, "Game", { B( "Restart Map" ), B( "End Game", true ) } ),
-			C( 1, "Menu", { T( "Hide Welcome Hint", "nohint" ), B( "Run Self-Test" ) } ),
-			C( 2, "Info", { ST( "Mode", "mode" ), ST( "Map", "map" ), ST( "Session", "session" ) } )
-		} }
+			C( 1, "Info", { ST( "Mode", "mode" ), ST( "Map", "map" ), ST( "Session", "session" ) } )
+		} },
+		MenuSide( "lobby/session" )
 	} } )
 	return tabs
 end
@@ -487,15 +515,15 @@ end
 local function MPTabs()
 	local tabs = {}
 	table.insert( tabs, { id = "player", label = "Player", sides = {
-		{ id = "general", label = "General", cards = {
+		{ id = "general", label = "Survival", cards = {
 			C( 0, "Survival", { T( "God Mode", "god" ), T( "Demi-God", "demigod", "never dies" ), T( "Always UAV", "uav" ), T( "Invisible", "invisible" ), T( "Instant Respawn", "instaspawn" ) } ),
-			C( 0, "Quick Actions", { B( "Max Ammo" ), B( "Full Health" ), B( "Full Specialist" ), B( "Suicide", true ) } ),
-			C( 1, "Ammo", { T( "Infinite Ammo", "ammo" ), T( "Infinite Equipment", "equip" ), T( "Infinite Specialist", "hero" ), CH( "Ammo Mode", "ammomode", { "Clip + Stock", "Stock Only" }, 0 ) } ),
 			C( 1, "Health", { S( "Max Health", "maxhp", { "100", "150", "250", "500", "1000" }, 0 ), CH( "Regen", "regen", { "Normal", "Fast", "Instant" }, 0 ) } ),
-			C( 2, "Score", { ST( "Your Score", "score" ), ST( "Kills", "kills" ), ST( "Deaths", "deaths" ), CH( "Add Score", "score_amt", { "100", "500", "1,000", "5,000" }, 2 ), B( "Give" ) } ),
-			C( 3, "Weapon", { ST( "Holding", "holding" ), B( "Refill" ), B( "Drop" ) } )
+			C( 2, "Quick Actions", { B( "Max Ammo" ), B( "Full Health" ), B( "Full Specialist" ), B( "Suicide", true ) } )
 		} },
-		MovementSide(), CameraSide(), OverlaySide( false ), PositionSide( "position", "Position" ), ConfigSide()
+		{ id = "score", label = "Score", home = "player/general", cards = {
+			C( 0, "Score", { ST( "Your Score", "score" ), ST( "Kills", "kills" ), ST( "Deaths", "deaths" ), CH( "Add Score", "score_amt", { "100", "500", "1,000", "5,000" }, 2 ), B( "Give" ) } )
+		} },
+		MovementSide(), CameraSide()
 	} } )
 
 	local att = {}
@@ -505,12 +533,17 @@ local function MPTabs()
 	end
 	table.insert( tabs, { id = "weapons", label = "Weapons", sides = {
 		MPWeaponSide( "ar", "Assault Rifles" ), MPWeaponSide( "smg", "SMGs" ), MPWeaponSide( "shotgun", "Shotguns" ), MPWeaponSide( "lmg", "LMGs" ),
-		MPWeaponSide( "sniper", "Snipers" ), MPWeaponSide( "pistol", "Pistols" ), MPWeaponSide( "launcher", "Launchers" ), MPWeaponSide( "hero", "Specialist" ),
+		MPWeaponSide( "sniper", "Snipers" ), MPWeaponSide( "pistol", "Pistols" ), MPWeaponSide( "launcher", "Launchers" ),
+		{ id = "loadout", label = "Loadout", home = "player/general", cards = {
+			C( 0, "Current Weapon", { ST( "Holding", "holding" ), B( "Refill" ), B( "Drop Weapon" ) } ),
+			AmmoCard( 1, false )
+		} },
 		{ id = "attach", label = "Attachments", gun = "pap", cards = {
 			C( 0, "Optic", { CH( "Optic", "att_optic", { "None", "Reflex", "ELO", "Holo", "Recon", "Thermal", "Varix" }, 0 ) } ),
 			C( 1, "Attachments", att ),
 			C( 2, "Apply", { B( "Apply to Current" ), N( "Unsupported ones are skipped." ) } )
 		} },
+		ModsSide( false, { "XM-53", "L4 Siege", "BlackCell", "Annihilator", "War Machine", "Tempest" } ),
 		CamoSide()
 	} } )
 
@@ -537,6 +570,8 @@ local function MPTabs()
 		} }
 	} } )
 
+	table.insert( tabs, { id = "visuals", label = "Visuals", sides = { FiltersSide(), OverlaySide( false ) } } )
+
 	table.insert( tabs, { id = "teleport", label = "Teleport", sides = {
 		PositionSide( "positions", "Positions" ),
 		{ id = "spots", label = "Map Spots", cards = {
@@ -545,7 +580,7 @@ local function MPTabs()
 		ToolsSide( "All Bots to Crosshair" )
 	} } )
 
-	table.insert( tabs, FunTab( { "XM-53", "L4 Siege", "BlackCell", "Annihilator", "War Machine", "Tempest" } ) )
+	table.insert( tabs, FunTab( false ) )
 	table.insert( tabs, WorldTab( false ) )
 	table.insert( tabs, { id = "lobby", label = "Lobby", sides = {
 		PlayersSide( false ),
@@ -558,9 +593,9 @@ local function MPTabs()
 		{ id = "match", label = "Match", cards = {
 			C( 0, "Timer", { T( "Pause Timer", "pausetimer" ), T( "Unlimited Time", "unlimtime" ), T( "Unlimited Score", "unlimscore" ) } ),
 			C( 1, "Game", { B( "Fast Restart" ), B( "End Game", true ) } ),
-			C( 2, "Menu", { T( "Hide Welcome Hint", "nohint" ), B( "Run Self-Test" ) } ),
-			C( 3, "Info", { ST( "Mode", "mode" ), ST( "Map", "map" ), ST( "Session", "session" ) } )
-		} }
+			C( 2, "Info", { ST( "Mode", "mode" ), ST( "Map", "map" ), ST( "Session", "session" ) } )
+		} },
+		MenuSide( "lobby/match" )
 	} } )
 	return tabs
 end

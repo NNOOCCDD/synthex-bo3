@@ -200,6 +200,13 @@ local function Send( menu, msg )
 	Engine.SendMenuResponse( menu.controller, MENU_NAME, ( string.gsub( msg, " ", "_" ) ) )
 end
 
+-- Where the script keeps a page / button: the layout can move things, a "home" ("tab/side") keeps the old address.
+local function ScriptPage( tab, side, row )
+	local home = ( row and row.home ) or side.home
+	if home then return ( string.gsub( home, "/", "|" ) ) end
+	return tab.id .. "|" .. side.id
+end
+
 local function CurrentTab( menu ) return menu.tabs[ State.tab ] or menu.tabs[1] end
 
 local function CurrentSide( menu )
@@ -258,7 +265,7 @@ local function Activate( menu, r )
 		if side.dynamic == "powerups" and r.id then
 			Send( menu, "pu|" .. r.id )
 		else
-			Send( menu, "b|" .. tab.id .. "|" .. side.id .. "|" .. r.label )
+			Send( menu, "b|" .. ScriptPage( tab, side, r ) .. "|" .. r.label )
 		end
 	elseif r.k == "item" then
 		State.sel[ r.group ] = r.id
@@ -547,7 +554,7 @@ DrawPage = function ( menu, fromData )
 	RefreshValues( menu )
 	-- Only real page changes ask the script for data; redraws caused by that data must not (that looped forever).
 	if not fromData then
-		Send( menu, "p|" .. tab.id .. "|" .. side.id )
+		Send( menu, "p|" .. ScriptPage( tab, side ) )
 	end
 end
 

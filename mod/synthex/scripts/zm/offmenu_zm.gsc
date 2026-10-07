@@ -298,8 +298,8 @@ function private build_player_tab()
 	self offmenu::stat( "Holding", &st_holding );
 	self offmenu::button( "Pack-a-Punch", &pap_current );
 	self offmenu::button( "Un-Pack", &unpap_current );
-	self offmenu::button( "Drop", &drop_current );
-	self offmenu::button( "Take", &take_current );
+	self offmenu::button( "Drop Weapon", &drop_current );
+	self offmenu::button( "Take Weapon", &take_current );
 
 	self offmenu_common::build_movement( "player" );
 	self offmenu_common::build_camera( "player" );
