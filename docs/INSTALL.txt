@@ -1,0 +1,20 @@
+SYNTHEX.VIP - Black Ops III mod menu (Zombies + Multiplayer custom games, offline / private only)
+
+INSTALL
+1. Copy the "mods" folder from this zip into your Black Ops III folder
+   (Steam > right-click Black Ops III > Manage > Browse local files).
+   You should end up with:  Call of Duty Black Ops III\mods\synthex\zone\  (six .ff files)
+2. Steam > right-click Black Ops III > Properties > Launch Options:
+       +set fs_game synthex
+3. Start the game, play Zombies (solo / private) or a Multiplayer custom game.
+
+USE
+  Open:   hold Aim + press Melee
+  Close:  V or Backspace (controller: B). Not Esc.
+  Mouse:  click everything. Keys: Q/E tabs, A/D sides, W/S move, F select, Z/X or wheel change values.
+  Save your settings: Player > Config > Save Config (auto-loads every game).
+
+UNINSTALL
+  Remove "+set fs_game synthex" from the launch options (and delete mods\synthex if you like).
+
+More: https://github.com/NNOOCCDD/synthex-bo3

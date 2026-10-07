@@ -1,0 +1,59 @@
+{
+	"synthex_esp_diamond" ( "material.gdf" )
+	{
+		"materialCategory" "2d"
+		"materialType" "2d_blend"
+		"colorMap" "i_synthex_esp_diamond"
+		"surfaceType" "<none>"
+	}
+	"i_synthex_esp_diamond" ( "image.gdf" )
+	{
+		"type" "image"
+		"baseImage" "mods\\synthex\\images\\esp_diamond.tif"
+		"semantic" "2d"
+		"compressionMethod" "uncompressed"
+		"clampU" "1"
+		"clampV" "1"
+		"noMipMaps" "1"
+		"noPicMip" "1"
+		"streamable" "0"
+	}
+	"synthex_esp_dot" ( "material.gdf" )
+	{
+		"materialCategory" "2d"
+		"materialType" "2d_blend"
+		"colorMap" "i_synthex_esp_dot"
+		"surfaceType" "<none>"
+	}
+	"i_synthex_esp_dot" ( "image.gdf" )
+	{
+		"type" "image"
+		"baseImage" "mods\\synthex\\images\\esp_dot.tif"
+		"semantic" "2d"
+		"compressionMethod" "uncompressed"
+		"clampU" "1"
+		"clampV" "1"
+		"noMipMaps" "1"
+		"noPicMip" "1"
+		"streamable" "0"
+	}
+	"synthex_esp_box" ( "material.gdf" )
+	{
+		"materialCategory" "2d"
+		"materialType" "2d_blend"
+		"colorMap" "i_synthex_esp_box"
+		"surfaceType" "<none>"
+	}
+	"i_synthex_esp_box" ( "image.gdf" )
+	{
+		"type" "image"
+		"baseImage" "mods\\synthex\\images\\esp_box.tif"
+		"semantic" "2d"
+		"compressionMethod" "uncompressed"
+		"clampU" "1"
+		"clampV" "1"
+		"noMipMaps" "1"
+		"noPicMip" "1"
+		"streamable" "0"
+	}
+}

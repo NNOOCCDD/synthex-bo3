@@ -1,0 +1,31 @@
+>mode,zm
+>type,common
+
+#include "zm_mod.class"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+rawfile,dummy.cfg
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// SYNTHEX.VIP menu (stock _clientids override hooks it into the load chain)
+scriptparsetree,scripts/zm/gametypes/_clientids.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_core.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_common.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_overlay.gsc
+scriptparsetree,scripts/zm/offmenu_zm_fun.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_fun.gsc
+scriptparsetree,scripts/zm/offmenu_esp.gsc
+scriptparsetree,scripts/zm/offmenu_zm.gsc
+
+// ESP marker textures
+material,synthex_esp_diamond
+material,synthex_esp_dot
+material,synthex_esp_box
+
+// SYNTHEX.VIP Lua menu (needs L3akMod in the tools to compile)
+rawfile,ui/synthex/synthex_spec.lua
+rawfile,ui/synthex/synthex_config.lua
+rawfile,ui/synthex/synthex_menu.lua
+rawfile,ui/synthex/synthex_overlay.lua
+scriptparsetree,scripts/shared/offmenu/synthex_ui.csc
+scriptparsetree,scripts/shared/music_shared.csc

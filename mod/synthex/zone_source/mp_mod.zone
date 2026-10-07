@@ -1,0 +1,25 @@
+>mode,mp
+>type,common
+
+#include "mp_mod.class"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+rawfile,dummy.cfg
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// SYNTHEX.VIP menu (stock _clientids override hooks it into the load chain)
+scriptparsetree,scripts/mp/gametypes/_clientids.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_core.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_common.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_overlay.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_fun.gsc
+scriptparsetree,scripts/mp/offmenu_mp.gsc
+
+
+// SYNTHEX.VIP Lua menu (needs L3akMod in the tools to compile)
+rawfile,ui/synthex/synthex_spec.lua
+rawfile,ui/synthex/synthex_config.lua
+rawfile,ui/synthex/synthex_menu.lua
+rawfile,ui/synthex/synthex_overlay.lua
+scriptparsetree,scripts/shared/offmenu/synthex_ui.csc
+scriptparsetree,scripts/shared/music_shared.csc

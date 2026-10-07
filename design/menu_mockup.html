@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SYNTHEX.VIP menu mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #1d1d1f;
+    --chrome:    #252527;
+    --panel:     #262628;
+    --panel-hi:  #2c2c2f;
+    --line:      #39393c;
+    --field:     #1f1f21;
+    --text:      #d9d9db;
+    --muted:     #8c8c90;
+    --dim:       #5d5d61;
+    --pink:      #d39cb2;
+    --pink-deep: #a8708a;
+    --pink-glow: #ff4fa6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0f0f10; }
+  body { font-family: Roboto, "Segoe UI", sans-serif; color: var(--text); font-size: 13px; padding: 30px; }
+
+  .menu {
+    width: 1220px; height: 500px;
+    background: var(--bg);
+    border: 1px solid #333336;
+    border-radius: 6px;
+    display: grid;
+    grid-template-rows: 58px 1fr 70px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  }
+
+  /* header */
+  .header {
+    background: var(--chrome);
+    border-bottom: 1px solid var(--pink-deep);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand img { width: 46px; height: 46px; }
+  .brand .word { font-size: 26px; font-weight: 300; letter-spacing: .5px; color: #e4e4e6; }
+  .brand .word b { font-weight: 300; color: var(--pink); }
+  .status { display: flex; gap: 8px; }
+  .chip {
+    background: var(--field); border: 1px solid var(--line); border-radius: 4px;
+    padding: 6px 12px; color: var(--muted); font-size: 12px;
+  }
+  .chip strong { color: var(--text); font-weight: 500; }
+  .chip.live { color: var(--pink); border-color: #4a3540; }
+  .chip.live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--pink-glow); margin-right: 7px; box-shadow: 0 0 6px var(--pink-glow); vertical-align: 1px; }
+
+  /* body */
+  .body { display: grid; grid-template-columns: 170px 1fr; min-height: 0; }
+  .side { background: var(--chrome); border-right: 1px solid var(--line); padding-top: 16px; }
+  .side .item {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 38px; padding: 0 14px 0 13px; color: var(--muted);
+    border-left: 3px solid transparent; font-size: 13px;
+  }
+  .side .item svg { opacity: .55; }
+  .side .item.active { color: #fff; background: #303033; border-left-color: var(--pink); font-weight: 500; }
+  .side .item.active svg { opacity: .9; }
+
+  .content { padding: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-content: start; }
+  .col { display: flex; flex-direction: column; gap: 14px; }
+  .card { background: var(--panel); border: 1px solid #303033; border-radius: 6px; overflow: hidden; }
+  .card h3 { font-size: 13px; font-weight: 500; padding: 10px 12px 9px; border-bottom: 1px solid var(--line); color: #e6e6e8; }
+  .card .rows { padding: 8px 12px 12px; display: flex; flex-direction: column; gap: 9px; }
+
+  .row { position: relative; }
+  .row.cursor::before {
+    content: ""; position: absolute; left: -12px; right: -12px; top: -4px; bottom: -4px;
+    background: rgba(211,156,178,.08); border-left: 2px solid var(--pink);
+  }
+  .row > * { position: relative; }
+
+  .check { display: flex; align-items: center; gap: 9px; color: var(--text); }
+  .check .box { width: 13px; height: 13px; border-radius: 2px; background: var(--field); border: 1px solid #3c3c40; }
+  .check.on .box { background: var(--pink); border-color: var(--pink); box-shadow: inset 0 0 0 2px var(--panel); }
+  .check.off { color: var(--muted); }
+  .hint { color: var(--dim); font-size: 11px; margin-left: auto; }
+
+  .label { color: var(--text); margin-bottom: 6px; }
+  .label span { color: var(--muted); }
+  .slider { height: 6px; background: var(--field); border-radius: 3px; position: relative; border: 1px solid #2f2f32; }
+  .slider i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, var(--pink-deep), var(--pink)); }
+  .slider i::after { content: ""; position: absolute; right: -2px; top: -3px; width: 4px; height: 10px; background: #f1dbe4; border-radius: 1px; }
+
+  .select {
+    height: 24px; background: var(--field); border: 1px solid #333336; border-radius: 3px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 8px; color: var(--muted); font-size: 12px;
+  }
+  .select::after { content: "‹ ›"; color: var(--dim); letter-spacing: 2px; }
+
+  .btn {
+    height: 26px; background: #2f2f32; border: 1px solid #3b3b3f; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 12px;
+  }
+  .btn.danger { color: #e7a3a3; }
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .stat { display: flex; justify-content: space-between; color: var(--muted); }
+  .stat b { color: var(--text); font-weight: 500; }
+
+  /* bottom nav */
+  .nav { background: var(--chrome); border-top: 1px solid var(--line); display: grid; grid-template-columns: 260px 1fr 260px; align-items: center; padding: 0 14px; }
+  .keys { color: var(--dim); font-size: 11px; line-height: 19px; white-space: nowrap; }
+  .keys kbd { font-family: inherit; color: var(--muted); background: var(--field); border: 1px solid var(--line); border-radius: 3px; padding: 0 5px; margin-right: 3px; }
+  .tabs { display: flex; justify-content: center; gap: 4px; }
+  .tab { width: 76px; height: 56px; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: var(--muted); font-size: 12px; }
+  .tab svg { width: 22px; height: 22px; stroke: #9a9a9e; }
+  .tab.active { background: #303033; color: #fff; font-weight: 500; }
+  .tab.active svg { stroke: var(--pink); }
+  .mode { justify-self: end; width: 64px; height: 56px; border: 1px solid #45454a; background: #2c2c2f; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px; color: var(--text); }
+  .mode img { width: 26px; height: 26px; }
+</style>
+</head>
+<body>
+<div class="menu">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <img src="zombie_logo.svg" alt="">
+      <div class="word">SYNTHEX<b>.VIP</b></div>
+    </div>
+    <div class="status">
+      <div class="chip">Round <strong>14</strong></div>
+      <div class="chip">Points <strong>48,250</strong></div>
+      <div class="chip">Map <strong>Shadows of Evil</strong></div>
+      <div class="chip live">Offline · Host</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+    <div class="side">
+      <div class="item active">General
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z"/></svg></div>
+      <div class="item">Movement
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="13" cy="4" r="2"/><path d="M7 21l3-6 3 2v4M10 15l1-6 4 3 3 1M11 9l-4 2-1 3"/></svg></div>
+      <div class="item">Camera
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div class="item">Position
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+    </div>
+
+    <div class="content">
+      <!-- col 1 -->
+      <div class="col">
+        <div class="card">
+          <h3>Survival</h3>
+          <div class="rows">
+            <div class="row cursor check on"><div class="box"></div>God Mode</div>
+            <div class="row check off"><div class="box"></div>Demi-God<span class="hint">takes hits, never dies</span></div>
+            <div class="row check on"><div class="box"></div>Zombies Ignore Me</div>
+            <div class="row check off"><div class="box"></div>Invisible</div>
+            <div class="row check off"><div class="box"></div>Auto Revive</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Quick Actions</h3>
+          <div class="rows">
+            <div class="btn-row"><div class="btn">Max Ammo</div><div class="btn">Full Health</div></div>
+            <div class="btn-row"><div class="btn">All Perks</div><div class="btn danger">Suicide</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- col 2 -->
+      <div class="col">
+        <div class="card">
+          <h3>Ammo</h3>
+          <div class="rows">
+            <div class="row check on"><div class="box"></div>Infinite Ammo</div>
+            <div class="row check off"><div class="box"></div>Infinite Equipment</div>
+            <div class="row check off"><div class="box"></div>Infinite Specialist</div>
+            <div class="row"><div class="label">Ammo Mode</div><div class="select">Clip + Stock</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Health</h3>
+          <div class="rows">
+            <div class="row"><div class="label">Max Health <span>- 250</span></div><div class="slider"><i style="width:50%"></i></div></div>
+            <div class="row"><div class="label">Regen Speed <span>- Fast</span></div><div class="slider"><i style="width:75%"></i></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- col 3 -->
+      <div class="col">
+        <div class="card">
+          <h3>Points</h3>
+          <div class="rows">
+            <div class="stat">Current<b>48,250</b></div>
+            <div class="row"><div class="label">Amount</div><div class="select">+ 10,000</div></div>
+            <div class="btn-row"><div class="btn">Give</div><div class="btn">Take</div></div>
+            <div class="row check off"><div class="box"></div>Lock Points</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Gobblegum</h3>
+          <div class="rows">
+            <div class="row"><div class="label">Gum</div><div class="select">Perkaholic</div></div>
+            <div class="btn">Activate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- col 4 -->
+      <div class="col">
+        <div class="card">
+          <h3>Weapon</h3>
+          <div class="rows">
+            <div class="stat">Holding<b>KN-44</b></div>
+            <div class="btn-row"><div class="btn">Pack-a-Punch</div><div class="btn">Un-Pack</div></div>
+            <div class="row"><div class="label">Alt Ammo</div><div class="select">Blast Furnace</div></div>
+            <div class="btn-row"><div class="btn">Drop</div><div class="btn">Take</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Session</h3>
+          <div class="rows">
+            <div class="stat">Mode<b>Zombies · Solo</b></div>
+            <div class="stat">Players<b>1 / 4</b></div>
+            <div class="row check on"><div class="box"></div>Show Welcome Hint</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="nav">
+    <div class="keys">
+      <kbd>Q</kbd><kbd>E</kbd> tabs &nbsp; <kbd>W</kbd><kbd>S</kbd> move<br>
+      <kbd>A</kbd><kbd>D</kbd> side / value &nbsp; <kbd>F</kbd> select &nbsp; <kbd>V</kbd> back
+    </div>
+    <div class="tabs">
+      <div class="tab active">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>Player</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/><circle cx="12" cy="12" r="1.2"/></svg>Weapons</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M7 21v-4M17 21v-4M5 11a7 7 0 1114 0v3a3 3 0 01-3 3H8a3 3 0 01-3-3z"/><circle cx="9" cy="11" r="1.6"/><circle cx="15" cy="11" r="1.6"/><path d="M10 21v-3M14 21v-3"/></svg>Zombies</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><ellipse cx="12" cy="12" rx="9" ry="5"/><ellipse cx="12" cy="12" rx="5" ry="2.5"/><path d="M12 2v4M12 18v4"/></svg>Teleport</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M12 2l2.2 6.2L20 9l-4.8 3.8L17 19l-5-3.5L7 19l1.8-6.2L4 9l5.8-.8z"/></svg>Fun</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>World</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 2 6 5"/></svg>Lobby</div>
+    </div>
+    <div class="mode"><img src="zombie_logo.svg" alt="">Zombies</div>
+  </div>
+</div>
+</body>
+</html>

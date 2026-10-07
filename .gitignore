@@ -1,0 +1,16 @@
+*.ff
+*.xpak
+zone/
+reference/
+.wineprefix/
+tools/last_build.log
+mod/synthex/zone/
+.toolsroot/
+# linker output (machine-specific paths, regenerated every build)
+mod/synthex/zone_source/all/
+mod/synthex/zone_source/english/
+mod/synthex/zone_source/loc/
+dist/
+# local working notes
+MODLOG.md
+MODDING_PLAN.md
