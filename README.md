@@ -54,7 +54,9 @@ map (power, doors, box, Pack-a-Punch), **Chaos**: exploding zombies, zombie laun
 **Visuals** — **Zombie ESP** (markers above heads with distance and health bars, style, colours, through walls,
 edge arrows), **Item ESP** (box, Pack-a-Punch, perks, wall weapons, parts, power-ups), **Zombie Chams** (solid,
 through walls, rim glow, glitch, hex shimmer, flow, hacked, thermal — 7 colours or a rainbow with adjustable speed),
-**Screen Filters**, and the **Overlay** stats box.
+**Screen Filters** (16 overlay effects that work on every map: tint, rainbow, vignette, scanlines, CRT, night
+vision, grid, glitch, cinematic bars, edge glow, frost, underwater, static, EMP, overdrive, speed lines), and the
+**Overlay** stats box.
 
 **Teleport** — saved positions, map spots (Pack-a-Punch, box, perk machines, power), teleport gun, bring players.
 
