@@ -22,6 +22,8 @@ function __init__()
 	LuiLoad( "ui.synthex.synthex_overlay" );
 	clientfield::register( "toplayer", "synthex_filter", VERSION_SHIP, 4, "int", &on_filter, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
 	clientfield::register( "actor", "synthex_zcham", VERSION_SHIP, 9, "int", &on_zcham, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
+	// gun chams: same materials on the local player, which the engine also applies to the first-person gun
+	clientfield::register( "toplayer", "synthex_gcham", VERSION_SHIP, 9, "int", &on_zcham, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
 	register_cham_filters();
 }
 

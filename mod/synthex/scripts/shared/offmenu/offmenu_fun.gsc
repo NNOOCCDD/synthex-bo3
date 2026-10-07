@@ -19,6 +19,8 @@ function __init__()
 	clientfield::register( "toplayer", "synthex_filter", VERSION_SHIP, 4, "int" );
 	// zombie chams: rainbow speed * 128 + style * 8 + colour (0 = off), drawn by synthex_ui.csc
 	clientfield::register( "actor", "synthex_zcham", VERSION_SHIP, 9, "int" );
+	// gun chams on your own first-person gun, same encoding
+	clientfield::register( "toplayer", "synthex_gcham", VERSION_SHIP, 9, "int" );
 }
 
 // ---------------------------------------------------------------------------

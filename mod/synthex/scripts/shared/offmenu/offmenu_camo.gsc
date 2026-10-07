@@ -2,6 +2,7 @@
 // Uses the game's own camo table (gamedata/weapons/common/attachmentTable.csv, camo indices).
 
 #using scripts\codescripts\struct;
+#using scripts\shared\clientfield_shared;
 #using scripts\shared\util_shared;
 #using scripts\shared\offmenu\offmenu_core;
 
@@ -58,6 +59,22 @@ function build_side( tab_id )
 	self offmenu::toggle( "Knife Camo", "kcamo_on", &toggle_camo );
 	self offmenu::choice( "Camo", "camo_knife", camo_values(), camo_labels(), 2, &camo_changed );
 	self offmenu::note( "Only knives that take camos (MP combat knife)." );
+	self offmenu::card( 2, "Gun Chams" );
+	self offmenu::toggle( "Gun Chams", "gc_on", &gun_chams_changed );
+	self offmenu::choice( "Style", "gc_style", array( 1, 5, 6, 7, 8, 9 ), array( "Solid", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" ), 0, &gun_chams_changed );
+	self offmenu::choice( "Colour", "gc_col", array( 0, 1, 2, 3, 4, 5, 6, 7 ), array( "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Rainbow" ), 0, &gun_chams_changed );
+	self offmenu::slider( "Rainbow Speed", "gc_speed", array( 0, 1, 2, 3 ), array( "Slow", "Normal", "Fast", "Very Fast" ), 1, &gun_chams_changed );
+	self offmenu::note( "Redraws your gun and arms, plain parts too." );
+}
+
+// Gun chams: the same cham materials as the zombies, on your own player (the engine draws them on the
+// first-person gun and arms, like the Active Camo specialist ability). Value = speed * 128 + style * 8 + colour.
+function private gun_chams_changed( value, key )
+{
+	v = 0;
+	if ( self offmenu::get_state( "gc_on" ) )
+		v = self offmenu::get_value( "gc_speed" ) * 128 + self offmenu::get_value( "gc_style" ) * 8 + self offmenu::get_value( "gc_col" );
+	self clientfield::set_to_player( "synthex_gcham", v );
 }
 
 function toggle_camo( on, key )
