@@ -23,7 +23,7 @@ function __init__()
 	clientfield::register( "toplayer", "synthex_filter", VERSION_SHIP, 4, "int", &on_filter, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
 	clientfield::register( "actor", "synthex_zcham", VERSION_SHIP, 9, "int", &on_zcham, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
 	// gun chams: same materials on the local player, which the engine also applies to the first-person gun
-	clientfield::register( "toplayer", "synthex_gcham", VERSION_SHIP, 9, "int", &on_zcham, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
+	clientfield::register( "toplayer", "synthex_gcham", VERSION_SHIP, 9, "int", &on_gcham, !CF_HOST_ONLY, !CF_CALLBACK_ZERO_ON_NEW_ENT );
 	register_cham_filters();
 }
 
@@ -71,13 +71,23 @@ function private register_cham_filters()
 				duplicate_render::set_dr_filter_framebuffer( name, 40, name, undefined, DR_TYPE_FRAMEBUFFER, material, DR_CULL_NEVER );
 		}
 	}
+	// gun chams: the first-person gun has its own depth range and the zombie overlays draw over opaque passes,
+	// so solid / flow / hacked go on the gun as an extra pass instead (same materials, no new ones)
+	foreach ( k in cham_colours() )
+	{
+		duplicate_render::set_dr_filter_framebuffer_duplicate( "sxgc_1_" + k, 41, "sxgc_1_" + k, undefined, DR_TYPE_FRAMEBUFFER_DUPLICATE, "mc/sx_cham_w_" + k, DR_CULL_NEVER );
+		duplicate_render::set_dr_filter_framebuffer_duplicate( "sxgc_8_" + k, 41, "sxgc_8_" + k, undefined, DR_TYPE_FRAMEBUFFER_DUPLICATE, "mc/sx_cham_flow_" + k, DR_CULL_NEVER );
+		duplicate_render::set_dr_filter_framebuffer_duplicate( "sxgc_9_" + k, 41, "sxgc_9_" + k, undefined, DR_TYPE_FRAMEBUFFER_DUPLICATE, "mc/sx_cham_hacked_" + k, DR_CULL_NEVER );
+	}
 	duplicate_render::set_dr_filter_framebuffer( "sxzc_thermal", 40, "sxzc_thermal", undefined, DR_TYPE_FRAMEBUFFER, DR_METHOD_THERMAL_MATERIAL, DR_CULL_NEVER );
 }
 
-function private cham_flags( style, key )
+function private cham_flags( style, key, gun )
 {
 	flags = [];
-	if ( style == 3 )
+	if ( IS_TRUE( gun ) && ( style == 1 || style == 8 || style == 9 ) )
+		flags[ flags.size ] = "sxgc_" + style + "_" + key;
+	else if ( style == 3 )
 		flags[ flags.size ] = "sxzc_thermal";
 	else if ( style == 4 )
 	{
@@ -104,23 +114,33 @@ function private set_cham_flags( localClientNum, flags )
 
 function private on_zcham( localClientNum, oldVal, newVal, bNewEnt, bInitialSnap, fieldName, bWasTimeJump )
 {
+	self apply_cham( localClientNum, newVal, false );
+}
+
+function private on_gcham( localClientNum, oldVal, newVal, bNewEnt, bInitialSnap, fieldName, bWasTimeJump )
+{
+	self apply_cham( localClientNum, newVal, true );
+}
+
+function private apply_cham( localClientNum, newVal, gun )
+{
 	self notify( "sx_rainbow" );
 	speed = Int( newVal / 128 );
 	style = Int( ( newVal % 128 ) / 8 );
 	c = newVal % 8;
 	if ( c == 7 && style != 3 && style > 0 )
 	{
-		self thread rainbow( localClientNum, style, speed );
+		self thread rainbow( localClientNum, style, speed, gun );
 		return;
 	}
 	cols = cham_colours();
 	if ( c > 6 )
 		c = 0;
-	self set_cham_flags( localClientNum, cham_flags( style, cols[ c ] ) );
+	self set_cham_flags( localClientNum, cham_flags( style, cols[ c ], gun ) );
 }
 
 // all zombies use the same clock, so they change colour together
-function private rainbow( localClientNum, style, speed )
+function private rainbow( localClientNum, style, speed, gun )
 {
 	self endon( "sx_rainbow" );
 	self endon( "entityshutdown" );
@@ -133,7 +153,7 @@ function private rainbow( localClientNum, style, speed )
 		i = Int( GetServerTime( localClientNum ) * order.size / cycle ) % order.size;
 		if ( i != last )
 		{
-			self set_cham_flags( localClientNum, cham_flags( style, order[ i ] ) );
+			self set_cham_flags( localClientNum, cham_flags( style, order[ i ], gun ) );
 			last = i;
 		}
 		WAIT_CLIENT_FRAME;

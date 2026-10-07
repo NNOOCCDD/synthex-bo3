@@ -200,7 +200,7 @@ local function CamoSide()
 	return { id = "camo", label = "Camo", cards = {
 		C( 0, "Guns", { T( "Universal Camo", "camo_on" ), CH( "Camo", "camo_gun", Spec.Camos, 2 ), N( "Every gun you hold, picked up ones too." ) } ),
 		C( 1, "Knife", { T( "Knife Camo", "kcamo_on" ), CH( "Camo", "camo_knife", Spec.Camos, 2 ), N( "Only knives that take camos (MP combat knife)." ) } ),
-		C( 2, "Gun Chams", { T( "Gun Chams", "gc_on" ), CH( "Style", "gc_style", { "Solid", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" }, 0 ),
+		C( 2, "Gun Chams", { T( "Gun Chams", "gc_on" ), CH( "Style", "gc_style", { "Solid", "Rim Glow", "Hex Shimmer", "Flow", "Hacked" }, 0 ),
 			CH( "Colour", "gc_col", { "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Rainbow" }, 0 ),
 			S( "Rainbow Speed", "gc_speed", { "Slow", "Normal", "Fast", "Very Fast" }, 1 ), N( "Redraws your gun and arms, plain parts too." ) } )
 	} }

@@ -61,7 +61,7 @@ function build_side( tab_id )
 	self offmenu::note( "Only knives that take camos (MP combat knife)." );
 	self offmenu::card( 2, "Gun Chams" );
 	self offmenu::toggle( "Gun Chams", "gc_on", &gun_chams_changed );
-	self offmenu::choice( "Style", "gc_style", array( 1, 5, 6, 7, 8, 9 ), array( "Solid", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" ), 0, &gun_chams_changed );
+	self offmenu::choice( "Style", "gc_style", array( 1, 5, 7, 8, 9 ), array( "Solid", "Rim Glow", "Hex Shimmer", "Flow", "Hacked" ), 0, &gun_chams_changed );
 	self offmenu::choice( "Colour", "gc_col", array( 0, 1, 2, 3, 4, 5, 6, 7 ), array( "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Rainbow" ), 0, &gun_chams_changed );
 	self offmenu::slider( "Rainbow Speed", "gc_speed", array( 0, 1, 2, 3 ), array( "Slow", "Normal", "Fast", "Very Fast" ), 1, &gun_chams_changed );
 	self offmenu::note( "Redraws your gun and arms, plain parts too." );
