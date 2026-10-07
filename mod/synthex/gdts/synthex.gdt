@@ -259,6 +259,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -282,6 +283,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -345,6 +347,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -368,6 +371,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -431,6 +435,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -454,6 +459,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -517,6 +523,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -540,6 +547,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -603,6 +611,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -626,6 +635,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -689,6 +699,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -712,6 +723,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"
@@ -775,6 +787,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_glitch"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_scan"
 		"colorMap00" "i_sx_scan"
@@ -798,6 +811,7 @@
 	{
 		"materialCategory" "Specialty"
 		"materialType" "lit_emissive_clone"
+		"ignoreScriptVectors" "1"
 		"surfaceType" "<none>"
 		"colorMap" "i_sx_hex"
 		"colorMap00" "i_sx_hex"

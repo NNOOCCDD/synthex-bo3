@@ -28,7 +28,8 @@ function __init__()
 // ---------------------------------------------------------------------------
 // Zombie chams. Value = style * 8 + colour. Styles:
 //   1 solid (material swap, depth tested)   2 through walls (extra pass, no depth test)   3 thermal   4 = 1 + 2
-//   5 rim glow, 6 glitch, 7 hex shimmer (extra pass over the zombie)   8 flow, 9 hacked (material swap)
+//   5 rim glow (extra pass over the zombie)   6 glitch, 7 hex shimmer, 8 flow, 9 hacked (material swap)
+// Glitch / hex shimmer materials ignore script vectors: zombies use scriptVector0 for their own damage effects.
 // Materials mc/sx_cham_* are built from the game's Specialty techsets (see gdts/synthex.gdt).
 // ---------------------------------------------------------------------------
 
@@ -46,8 +47,8 @@ function private register_cham_filters()
 		add_cham_filter( 1, c, false, "mc/sx_cham_" + col + "_z" );
 		add_cham_filter( 2, c, true, "mc/sx_cham_" + col );
 		add_cham_filter( 5, c, true, "mc/sx_cham_rim_" + col );
-		add_cham_filter( 6, c, true, "mc/sx_cham_glitch_" + col );
-		add_cham_filter( 7, c, true, "mc/sx_cham_clone_" + col );
+		add_cham_filter( 6, c, false, "mc/sx_cham_glitch_" + col );
+		add_cham_filter( 7, c, false, "mc/sx_cham_clone_" + col );
 		add_cham_filter( 8, c, false, "mc/sx_cham_flow_" + col );
 		add_cham_filter( 9, c, false, "mc/sx_cham_hacked_" + col );
 	}
