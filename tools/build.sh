@@ -32,6 +32,9 @@ export WINEDLLOVERRIDES="msvcr110,msvcp110=n,b"
 
 [ -f "$TOOLS/bin/linker_modtools.exe" ] || { echo "Mod Tools not installed at: $TOOLS" >&2; exit 1; }
 
+# The linker doesn't notice a missing local function (&fn); the game then refuses to load the mod.
+python3 "$REPO/tools/check_refs.py" || { echo "Fix the missing functions above before building." >&2; exit 1; }
+
 # The linker reads mods/<MOD>/ under the tools root; point it at the repo copy.
 mkdir -p "$TOOLS/mods"
 if [ ! -L "$TOOLS/mods/$MOD" ]; then
