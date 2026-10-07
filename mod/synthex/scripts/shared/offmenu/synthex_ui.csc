@@ -29,20 +29,14 @@ function __init__()
 // Zombie chams. Clientfield value = speed * 128 + style * 8 + colour.
 // Styles: 1 solid (material swap, depth tested)  2 through walls (extra pass, no depth test)  3 thermal  4 = 1 + 2
 //         5 rim glow (extra pass)  6 glitch  7 hex shimmer  8 flow  9 hacked (material swap)
-// Colours 0..6 fixed, 7 = rainbow: steps through 24 pre-coloured hue materials (speed 0..3 = 4 / 2.4 / 1.2 / 0.6 s per cycle).
-// Materials mc/sx_cham_<style>_<colour|hNN> come from tools/gen_chams.py.
+// Colours 0..6 (see cham_colours), 7 = rainbow: cycles the colours (speed 0..3 = 4 / 2.4 / 1.2 / 0.6 s per cycle).
+// Materials mc/sx_cham_<style>_<colour> come from tools/gen_chams.py. Keep their number small (49): the client
+// only maps a limited number of duplicate-render materials, and past that styles silently stop drawing.
 // ---------------------------------------------------------------------------
 
 function private cham_colours()
 {
-	return array( "pink", "red", "green", "cyan", "gold", "white", "purple" );
-}
-
-function private hue_key( i )
-{
-	if ( i < 10 )
-		return "h0" + i;
-	return "h" + i;
+	return array( "pink", "red", "orange", "yellow", "green", "cyan", "blue" );
 }
 
 function private style_material( style )
@@ -61,14 +55,11 @@ function private style_material( style )
 
 function private register_cham_filters()
 {
-	keys = cham_colours();
-	for ( i = 0; i < 24; i++ )
-		keys[ keys.size ] = hue_key( i );
 	foreach ( style in array( 1, 2, 5, 6, 7, 8, 9 ) )
 	{
 		// through walls and rim glow are drawn again on top of the zombie; the rest replace its material
 		overlay = ( style == 2 || style == 5 );
-		foreach ( k in keys )
+		foreach ( k in cham_colours() )
 		{
 			name = "sxzc_" + style + "_" + k;
 			material = "mc/sx_cham_" + style_material( style ) + "_" + k;
@@ -131,15 +122,16 @@ function private rainbow( localClientNum, style, speed )
 {
 	self endon( "sx_rainbow" );
 	self endon( "entityshutdown" );
+	order = array( "red", "orange", "yellow", "green", "cyan", "blue", "pink" );
 	cycles = array( 4000, 2400, 1200, 600 );
 	cycle = cycles[ speed ];
 	last = -1;
 	for ( ;; )
 	{
-		i = Int( GetServerTime( localClientNum ) * 24 / cycle ) % 24;
+		i = Int( GetServerTime( localClientNum ) * order.size / cycle ) % order.size;
 		if ( i != last )
 		{
-			self set_cham_flags( localClientNum, cham_flags( style, hue_key( i ) ) );
+			self set_cham_flags( localClientNum, cham_flags( style, order[ i ] ) );
 			last = i;
 		}
 		WAIT_CLIENT_FRAME;
