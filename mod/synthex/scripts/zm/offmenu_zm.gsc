@@ -1618,8 +1618,5 @@ function private item_spot( id, group )
 function private offmenu_fun_filters_side( player )
 {
 	player offmenu::side( "world", "filters", "Filters" );
-	player offmenu::card( 0, "Screen Filter" );
-	player offmenu::choice( "Filter", "filter", array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ),
-		array( "None", "Frost", "Glitch", "Overdrive", "Underwater", "Rain", "Radial Blur", "Speed Burst", "Static", "EMP" ), 0, &offmenu_fun::set_filter );
 	player offmenu_fun::screen_effect_rows();
 }

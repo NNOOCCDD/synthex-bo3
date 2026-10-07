@@ -110,9 +110,9 @@ function give_ladder_weapon( name )
 // Overlay Effects are drawn by the Lua menu (synthex_screen.lua); the script only registers the settings.
 function screen_effect_rows()
 {
-	self offmenu::card( 1, "Overlay Effects" );
-	self offmenu::choice( "Effect", "sfx_effect", array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ),
-		array( "Off", "Tint", "Rainbow Tint", "Vignette", "Scanlines", "CRT", "Night Vision", "Grid", "Glitch", "Cinematic Bars", "Edge Glow" ), 0, &client_side );
+	self offmenu::card( 0, "Overlay Effects" );
+	self offmenu::choice( "Effect", "sfx_effect", array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ),
+		array( "Off", "Tint", "Rainbow Tint", "Vignette", "Scanlines", "CRT", "Night Vision", "Grid", "Glitch", "Cinematic Bars", "Edge Glow", "Frost", "Underwater", "Static", "EMP", "Overdrive", "Speed Lines" ), 0, &client_side );
 	self offmenu::choice( "Colour", "sfx_col", array( 0, 1, 2, 3, 4, 5, 6, 7 ), array( "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "White" ), 0, &client_side );
 	self offmenu::slider( "Strength", "sfx_str", array( 0, 1, 2 ), array( "Low", "Medium", "High" ), 1, &client_side );
 }

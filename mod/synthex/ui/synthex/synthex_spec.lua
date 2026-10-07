@@ -187,11 +187,10 @@ end
 
 local function FiltersSide()
 	return { id = "filters", label = "Screen Filters", cards = {
-		C( 0, "Overlay Effects", { CH( "Effect", "sfx_effect", { "Off", "Tint", "Rainbow Tint", "Vignette", "Scanlines", "CRT", "Night Vision", "Grid", "Glitch", "Cinematic Bars", "Edge Glow" }, 0 ),
+		C( 0, "Overlay Effects", { CH( "Effect", "sfx_effect", { "Off", "Tint", "Rainbow Tint", "Vignette", "Scanlines", "CRT", "Night Vision", "Grid", "Glitch", "Cinematic Bars", "Edge Glow", "Frost", "Underwater", "Static", "EMP", "Overdrive", "Speed Lines" }, 0 ),
 			CH( "Colour", "sfx_col", { "Pink", "Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "White" }, 0 ),
-			S( "Strength", "sfx_str", { "Low", "Medium", "High" }, 1 ), N( "Works on every map." ) } ),
-		C( 1, "Game Filters", { CH( "Filter", "filter", { "None", "Frost", "Glitch", "Overdrive", "Underwater", "Rain", "Radial Blur", "Speed Burst", "Static", "EMP" }, 0 ),
-			N( "The game's own effects. Some only" ), N( "exist on certain maps." ) } )
+			S( "Strength", "sfx_str", { "Low", "Medium", "High" }, 1 ) } ),
+		C( 1, "About", { N( "Works on every map." ), N( "Colour applies to Tint, Grid," ), N( "Glitch, Edge Glow and CRT." ) } )
 	} }
 end
 
