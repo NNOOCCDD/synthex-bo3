@@ -180,6 +180,29 @@ function private find_tab( id )
 	return undefined;
 }
 
+// Pages filled when opened (perks, power-ups, ...) only register their toggles / sliders then. A saved config
+// can name them before the page was ever opened: build every such page once. Returns true if it did.
+function private build_dynamic_rows()
+{
+	if ( IS_TRUE( self.offm.dyn_built ) )
+		return false;
+	self.offm.dyn_built = true;
+	keep = self.offm.b_side;
+	foreach ( t in self.offm.tabs )
+	{
+		foreach ( s in t.sides )
+		{
+			if ( !isdefined( s.fill ) )
+				continue;
+			s.cards = [];
+			self.offm.b_side = s;
+			self [[ s.fill ]]();
+		}
+	}
+	self.offm.b_side = keep;
+	return true;
+}
+
 function private find_side( tab_id, side_id )
 {
 	t = self find_tab( tab_id );
@@ -463,6 +486,8 @@ function handle_response( response )
 			state = ( parts[ 2 ] == "1" );
 			self.offm_state[ key ] = state;
 			fn = self.offm.toggle_fns[ key ];
+			if ( !isdefined( fn ) && self build_dynamic_rows() )
+				fn = self.offm.toggle_fns[ key ];
 			if ( isdefined( fn ) )
 				self thread [[ fn ]]( state, key );
 			break;
@@ -472,6 +497,8 @@ function handle_response( response )
 				return;
 			key = parts[ 1 ];
 			r = self.offm.value_rows[ key ];
+			if ( !isdefined( r ) && self build_dynamic_rows() )
+				r = self.offm.value_rows[ key ];
 			if ( !isdefined( r ) )
 				return;
 			idx = int( parts[ 2 ] );

@@ -26,10 +26,17 @@ local function CfgRows( zm )
 	local rows = {}
 	for _, tab in ipairs( Spec.Build( zm ) ) do
 		for _, side in ipairs( tab.sides ) do
-			for _, card in ipairs( side.cards or {} ) do
+			local cards = side.cards
+			-- pages built from script data (perks, power-ups): build them as if everything were available
+			if not cards and side.build then
+				local everything = setmetatable( {}, { __index = function () return true end } )
+				local ok, built = pcall( side.build, { available = everything } )
+				if ok and type( built ) == "table" then cards = built end
+			end
+			for _, card in ipairs( cards or {} ) do
 				for _, r in ipairs( card.rows or {} ) do
 					local k = r.key
-					if k and not r.lua and not CFG_SKIP[ k ] and not string.find( k, "^perk_" ) and not string.find( k, "^att_" )
+					if k and not r.lua and not CFG_SKIP[ k ] and not string.find( k, "^att_" )
 						and ( r.k == "toggle" or r.k == "slider" or r.k == "choice" ) then
 						rows[ k ] = r
 					end
