@@ -71,6 +71,7 @@ material,mc/sx_cham_hacked_blue
 // SYNTHEX.VIP Lua menu (needs L3akMod in the tools to compile)
 rawfile,ui/synthex/synthex_spec.lua
 rawfile,ui/synthex/synthex_config.lua
+rawfile,ui/synthex/synthex_screen.lua
 rawfile,ui/synthex/synthex_menu.lua
 rawfile,ui/synthex/synthex_overlay.lua
 scriptparsetree,scripts/shared/offmenu/synthex_ui.csc

@@ -10,6 +10,7 @@
 
 require( "ui.synthex.synthex_spec" )
 require( "ui.synthex.synthex_config" )
+require( "ui.synthex.synthex_screen" )
 
 local Spec = CoD.SynthexSpec
 local MENU_NAME = "SynthexMenu"
@@ -276,6 +277,9 @@ end
 
 -- Settings that live on the client (the server can't set them): field of view.
 function ApplyClientSide( r, idx )
+	if string.sub( r.key or "", 1, 4 ) == "sfx_" and CoD.SynthexScreenRefresh then
+		pcall( CoD.SynthexScreenRefresh, 0 )
+	end
 	if r.key == "fov" then
 		pcall( function () Engine.SetDvar( "cg_fov_default", tonumber( r.labels[ idx + 1 ] ) ) end )
 	end
@@ -707,6 +711,9 @@ function LUI.createMenu.SynthexMenu( controller )
 	if State.tab > #menu.tabs then State.tab = 1 end
 
 	pcall( CoD.SynthexCfg.StartWatcher )
+	-- screen effects live on the UI root; a new map clears it, so put them back
+	local fx = CoD.SynthexScreenElem
+	if ( not fx or fx:isClosed() ) and ( State.values.sfx_effect or 0 ) > 0 then pcall( CoD.SynthexScreenRefresh, controller ) end
 	if CoD.SynthexCfg.store == "-" then pcall( CoD.SynthexCfg.Refresh, controller ) end
 	CoD.SynthexRedraw = function () Later( menu, function () if not menu:isClosed() then DrawPage( menu, true ) end end ) end
 	DrawChrome( menu )

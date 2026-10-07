@@ -699,6 +699,7 @@ function private build_world_tab()
 	self offmenu::card( 0, "Screen Filter" );
 	self offmenu::choice( "Filter", "filter", array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ),
 		array( "None", "Frost", "Glitch", "Overdrive", "Underwater", "Rain", "Radial Blur", "Speed Burst", "Static", "EMP" ), 0, &offmenu_fun::set_filter );
+	self offmenu_fun::screen_effect_rows();
 }
 
 function private toggle_pause_timer( on, key )
