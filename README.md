@@ -75,10 +75,6 @@ The mod is made with Treyarch's official **Black Ops III Mod Tools**. The menu U
 linker refuses to compile, so you also need **L3akMod** (D3V Team, tested with v1.0.4) installed into the Mod Tools.
 Full steps for Windows and Linux (Wine) are in [docs/BUILDING.md](docs/BUILDING.md).
 
-The README graphics are made with [Remotion](https://www.remotion.dev) in `graphics/`
-(`npm install`, then `npm run clip` for the banner, `npm run features`). The banner footage is
-`graphics/public/gunchams.mp4`, cut from an in-game recording.
-
 Notes for other modders (how the LUI menu talks to GSC, engine limits we hit, workarounds) are in
 [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
