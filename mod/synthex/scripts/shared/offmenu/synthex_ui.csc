@@ -65,13 +65,26 @@ function private add_cham_filter( style, c, overlay, material )
 		duplicate_render::set_dr_filter_framebuffer( name, 40, name, undefined, DR_TYPE_FRAMEBUFFER, material, DR_CULL_NEVER );
 }
 
-function private cham_flags( v )
+function private cham_rgb( c )
+{
+	switch ( c )
+	{
+		case 0: return ( 1, 0.31, 0.65 );
+		case 1: return ( 1, 0.12, 0.12 );
+		case 2: return ( 0.3, 1, 0.4 );
+		case 3: return ( 0.2, 0.85, 1 );
+		case 4: return ( 1, 0.75, 0.2 );
+		case 5: return ( 1, 1, 1 );
+	}
+	return ( 0.62, 0.3, 1 );
+}
+
+// flags for style + colour (colour 7 = rainbow, drawn with the pink materials and re-tinted every frame)
+function private cham_flags( style, c )
 {
 	flags = [];
-	if ( v <= 0 )
-		return flags;
-	style = Int( v / 8 );
-	c = v % 8;
+	if ( c == 7 )
+		c = 0;
 	if ( style == 3 )
 		flags[ flags.size ] = "sxzc_thermal";
 	else if ( style == 4 )
@@ -79,18 +92,93 @@ function private cham_flags( v )
 		flags[ flags.size ] = "sxzc_" + ( 8 + c );
 		flags[ flags.size ] = "sxzc_" + ( 16 + c );
 	}
-	else
-		flags[ flags.size ] = "sxzc_" + v;
+	else if ( style > 0 )
+		flags[ flags.size ] = "sxzc_" + ( style * 8 + c );
 	return flags;
+}
+
+// styles whose colour is the material's "Tint" (cg02 = scriptVector2), so script can recolour them
+function private tint_style( style )
+{
+	return style == 1 || style == 2 || style == 4 || style == 5;
+}
+
+function private set_cham_flags( localClientNum, flags )
+{
+	if ( isdefined( self.sx_cham_flags ) )
+	{
+		foreach ( f in self.sx_cham_flags )
+			self duplicate_render::set_dr_flag( f, false );
+	}
+	foreach ( f in flags )
+		self duplicate_render::set_dr_flag( f, true );
+	self.sx_cham_flags = flags;
+	self duplicate_render::update_dr_filters( localClientNum );
 }
 
 function private on_zcham( localClientNum, oldVal, newVal, bNewEnt, bInitialSnap, fieldName, bWasTimeJump )
 {
-	foreach ( f in cham_flags( oldVal ) )
-		self duplicate_render::set_dr_flag( f, false );
-	foreach ( f in cham_flags( newVal ) )
-		self duplicate_render::set_dr_flag( f, true );
-	self duplicate_render::update_dr_filters( localClientNum );
+	self notify( "sx_rainbow" );
+	style = Int( newVal / 8 );
+	c = newVal % 8;
+	self set_cham_flags( localClientNum, cham_flags( style, c ) );
+	if ( !tint_style( style ) )
+	{
+		if ( c == 7 && style != 3 )
+			self thread rainbow_steps( localClientNum, style );
+		return;
+	}
+	if ( c == 7 )
+		self thread rainbow_tint( localClientNum );
+	else
+	{
+		rgb = cham_rgb( c );
+		self MapShaderConstant( localClientNum, 0, "scriptVector2", rgb[ 0 ], rgb[ 1 ], rgb[ 2 ], 1 );
+	}
+}
+
+// hue 0..1 -> rgb
+function private hue_rgb( t )
+{
+	h = ( t - Int( t ) ) * 6;	// t is never negative
+	i = Int( h );
+	f = h - i;
+	q = 1 - f;
+	switch ( i )
+	{
+		case 0: return ( 1, f, 0 );
+		case 1: return ( q, 1, 0 );
+		case 2: return ( 0, 1, f );
+		case 3: return ( 0, q, 1 );
+		case 4: return ( f, 0, 1 );
+	}
+	return ( 1, 0, q );
+}
+
+// smooth rainbow: one full cycle every 3 seconds, all zombies in step
+function private rainbow_tint( localClientNum )
+{
+	self endon( "sx_rainbow" );
+	self endon( "entityshutdown" );
+	for ( ;; )
+	{
+		rgb = hue_rgb( GetServerTime( localClientNum ) / 3000.0 );
+		self MapShaderConstant( localClientNum, 0, "scriptVector2", rgb[ 0 ], rgb[ 1 ], rgb[ 2 ], 1 );
+		WAIT_CLIENT_FRAME;
+	}
+}
+
+// glitch / hex shimmer / flow / hacked have the colour baked in: step through the colours in hue order
+function private rainbow_steps( localClientNum, style )
+{
+	self endon( "sx_rainbow" );
+	self endon( "entityshutdown" );
+	order = array( 1, 4, 2, 3, 6, 0 );
+	for ( i = 0; ; i = ( i + 1 ) % order.size )
+	{
+		self set_cham_flags( localClientNum, cham_flags( style, order[ i ] ) );
+		wait 0.2;
+	}
 }
 
 // 1 frost, 2 glitch, 3 overdrive, 4 underwater, 5 rain, 6 radial blur, 7 speed burst, 8 static, 9 emp

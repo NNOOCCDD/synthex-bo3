@@ -425,7 +425,7 @@ local function ZMTabs()
 		} },
 		{ id = "chams", label = "Chams", cards = {
 			C( 0, "Zombie Chams", { T( "Enabled", "zc_on" ), CH( "Style", "zc_style", { "Solid", "Through Walls", "Solid + Walls", "Thermal", "Rim Glow", "Glitch", "Hex Shimmer", "Flow", "Hacked" }, 2 ),
-				CH( "Colour", "zc_col", { "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple" }, 0 ) } ),
+				CH( "Colour", "zc_col", { "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple", "Rainbow" }, 0 ) } ),
 			C( 1, "About", { N( "Solid: zombies drawn in one flat colour." ), N( "Through Walls: coloured silhouette you can see through walls." ), N( "Thermal: heat-vision look." ), N( "Rim Glow, Glitch, Hex Shimmer, Flow, Hacked: animated game shaders." ) } )
 		} }
 	} } )
