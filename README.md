@@ -91,7 +91,6 @@ Notes for other modders (how the LUI menu talks to GSC, engine limits we hit, wo
 - Built with the Call of Duty: Black Ops III Mod Tools (Treyarch / Activision). Two stock scripts
   (`_clientids.gsc`, `music_shared.csc`) are included with one added line each to load the menu.
 - Lua compiling via L3akMod (D3V Team) — not included, download it yourself.
-- Made by imzleepink, written with the help of Claude (Anthropic's AI) as a coding assistant.
 
 Not affiliated with or endorsed by Activision or Treyarch. No game files are included.
 
