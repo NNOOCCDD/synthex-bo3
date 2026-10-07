@@ -55,3 +55,12 @@ listener on the UI root answers with paced `t|`/`v|` messages while the menu is 
 - There's no fire-rate or recoil scale for players in script: Rapid Fire uses `MagicBullet` with the held
   weapon, No Recoil undoes upward view kick each frame while firing.
 - `GiveAchievement` is ignored while a mod is loaded.
+- Weapon camos: `UpdateWeaponOptions( w, CalcWeaponOptions( camo, 0, 0, 0, 0 ) )` with indices from the stock
+  `gamedata/weapons/common/attachmentTable.csv`; re-applied on `weapon_change`.
+- Zombie chams use the duplicate-render system (`duplicate_render::set_dr_filter_*` + per-entity flags from an actor
+  clientfield) with our own `mc/` materials on the game's Specialty techsets (`hud_outline_model[_z]`, `sonar_rim`,
+  `lit_emissive_glitch`, …). Material GDT keys are the `<names>` in the techsetdef (`cg02_x` = Tint, `colorTint1`,
+  `scaleRGB`, …); every texture slot needs an image of your own (stock defaults like `$white_diffuse` aren't in the
+  gdtDB); the GDT entry has no `mc/` prefix, the zone line does. `cgNN` = `scriptVectorNN`, and zombies drive
+  `scriptVector0` themselves, so effect materials need `ignoreScriptVectors`.
+- The client maps only a limited number of duplicate-render materials: 49 worked, 217 made most styles vanish.

@@ -45,6 +45,8 @@ anywhere, No Clip fly. **Camera**: third person, FOV, hide HUD, photo mode. **Ov
 stats, size and opacity. **Position**: save/load positions, quick teleports. **Config**: save/load settings.
 
 **Weapons** — every weapon on the map by category, Pack-a-Punched versions, attachments (MP), current loadout.
+**Camo**: one camo on every gun you hold (103 of the game's camos — Dark Matter, Diamond, Gold, every Pack-a-Punch
+camo, animated Black Market ones, …) plus a separate knife camo.
 
 **Zombies** (Zombies mode) — points, all perks, classic and mega Gobblegums, power-ups, rounds (skip, jump to,
 freeze), map tools (open all doors, power on, Mystery Box / Pack-a-Punch), zombie spawning and speed, revive tools
@@ -52,7 +54,8 @@ freeze), map tools (open all doors, power on, Mystery Box / Pack-a-Punch), zombi
 
 **ESP** (Zombies mode, AI zombies and map items only) — markers above zombie heads with distance and a health
 bar; styles, sizes, colours per enemy type, through walls, edge arrows, max distance; Mystery Box, Pack-a-Punch,
-perks, wall weapons, buildable parts and power-ups.
+perks, wall weapons, buildable parts and power-ups. **Chams**: zombies drawn solid, through walls, with a rim glow or
+animated glitch / hex shimmer / flow / hacked shaders, in 7 colours or a cycling rainbow with adjustable speed.
 
 **Fun** — explosive bullets, magic bullets, **Rapid Fire** (5–40 shots/s, any gun, snipers too), No Recoil,
 fast reload, Headshots Only and Every Shot Hits Head (Zombies), Forge mode, airstrike at the crosshair,
