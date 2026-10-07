@@ -3,6 +3,7 @@
 // ESP pauses while the menu is open to keep the hud elem count down.
 
 #using scripts\codescripts\struct;
+#using scripts\shared\clientfield_shared;
 #using scripts\shared\util_shared;
 #using scripts\shared\offmenu\offmenu_core;
 
@@ -85,6 +86,16 @@ function build_tab()
 	self offmenu::card( 1, "Style" );
 	self offmenu::choice( "Colour", "esp_c_item", colors, color_labels, 3 );
 	self offmenu::slider( "Size", "esp_i_size", array( 3, 5, 8, 12, 16, 22 ), array( "XS", "S", "M", "L", "XL", "XXL" ), 2 );
+
+	self offmenu::side( "esp", "chams", "Chams" );
+	self offmenu::card( 0, "Zombie Chams" );
+	self offmenu::toggle( "Enabled", "zc_on", &toggle_chams );
+	self offmenu::choice( "Style", "zc_style", array( 1, 2, 4, 3 ), array( "Solid", "Through Walls", "Solid + Walls", "Thermal" ), 2, &chams_changed );
+	self offmenu::choice( "Colour", "zc_col", array( 0, 1, 2, 3, 4, 5, 6 ), array( "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple" ), 0, &chams_changed );
+	self offmenu::card( 1, "About" );
+	self offmenu::note( "Solid: zombies drawn in one flat colour." );
+	self offmenu::note( "Through Walls: coloured silhouette you can see through walls." );
+	self offmenu::note( "Thermal: heat-vision look." );
 
 	// defaults (first build only)
 	if ( !isdefined( self.offm_state[ "esp_init" ] ) )
@@ -532,4 +543,49 @@ function private live_nearest()
 		case "crawl": return "Crawler";
 	}
 	return "Zombie";
+}
+
+// ---------------------------------------------------------------------------
+// Zombie chams: each zombie gets a clientfield, synthex_ui.csc swaps its material (duplicate render)
+// ---------------------------------------------------------------------------
+
+function private toggle_chams( on, key )
+{
+	self notify( "offm_chams_end" );
+	if ( on )
+		self thread chams_loop();
+	else
+		set_all_chams( 0 );
+}
+
+function private chams_changed( value, key )
+{
+	self notify( "offm_chams_refresh" );
+}
+
+function private chams_value()
+{
+	return self offmenu::get_value( "zc_style" ) * 8 + self offmenu::get_value( "zc_col" );
+}
+
+function private chams_loop()
+{
+	self endon( "disconnect" );
+	self endon( "offm_chams_end" );
+	for ( ;; )
+	{
+		set_all_chams( self chams_value() );
+		self util::waittill_any_timeout( 0.3, "offm_chams_refresh" );
+	}
+}
+
+function private set_all_chams( v )
+{
+	foreach ( ai in GetAITeamArray( level.zombie_team ) )
+	{
+		if ( !IsAlive( ai ) || ai.offm_zcham === v )
+			continue;
+		ai clientfield::set( "synthex_zcham", v );
+		ai.offm_zcham = v;
+	}
 }

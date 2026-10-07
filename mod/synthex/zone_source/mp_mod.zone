@@ -13,8 +13,25 @@ scriptparsetree,scripts/shared/offmenu/offmenu_core.gsc
 scriptparsetree,scripts/shared/offmenu/offmenu_common.gsc
 scriptparsetree,scripts/shared/offmenu/offmenu_overlay.gsc
 scriptparsetree,scripts/shared/offmenu/offmenu_fun.gsc
+scriptparsetree,scripts/shared/offmenu/offmenu_camo.gsc
 scriptparsetree,scripts/mp/offmenu_mp.gsc
 
+
+// zombie chams (flat colour, see synthex_ui.csc)
+material,mc/sx_cham_pink
+material,mc/sx_cham_pink_z
+material,mc/sx_cham_red
+material,mc/sx_cham_red_z
+material,mc/sx_cham_green
+material,mc/sx_cham_green_z
+material,mc/sx_cham_cyan
+material,mc/sx_cham_cyan_z
+material,mc/sx_cham_gold
+material,mc/sx_cham_gold_z
+material,mc/sx_cham_white
+material,mc/sx_cham_white_z
+material,mc/sx_cham_purple
+material,mc/sx_cham_purple_z
 
 // SYNTHEX.VIP Lua menu (needs L3akMod in the tools to compile)
 rawfile,ui/synthex/synthex_spec.lua

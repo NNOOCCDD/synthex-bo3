@@ -174,6 +174,35 @@ local function ConfigSide()
 	} }
 end
 
+-- Weapons > Camo (same order as offmenu_camo.gsc)
+Spec.Camos = {
+	"Gold", "Diamond", "Dark Matter", "Jungle Tech", "Ash", "Flectarn",
+	"Heat Stroke", "Snow Job", "Dante", "Integer", "6 Speed", "Policia",
+	"Ardent", "Burnt", "Bliss", "Battle", "Chameleon", "Arctic",
+	"Jungle", "Huntsman", "Woodlums", "Contagious", "Fear", "WMD",
+	"Red Hex", "Lucid", "PaP Shadows of Evil", "PaP Der Eisendrache 1", "PaP Der Eisendrache 2", "PaP Der Eisendrache 3",
+	"PaP Der Eisendrache 4", "PaP Der Eisendrache 5", "PaP Der Eisendrache 6", "PaP Zetsubou No Shima", "PaP Gorod Krovi", "PaP Gorod Krovi 2",
+	"PaP Gorod Krovi 3", "PaP Revelations", "PaP Revelations 2", "Transgression", "Storm", "Wartorn",
+	"Prestige", "Etching", "Ice", "Jungle Earth", "Jungle Glow", "Scorch Contrast",
+	"Scorch Green", "Scorch Glow", "Flectarn Purple", "Flectarn Stealth", "Flectarn Glow", "Flectarn Shiny",
+	"Snow Job Green", "Dante Crazy", "Dante Hallucination", "Dante Glow", "Integer Purple", "Integer Glow",
+	"Ardent Glow", "Burnt Shiny", "Art of War Gold Ink", "Art of War Gem", "Art of War Animated", "Chameleon Shiny",
+	"Chameleon Glow", "Heat Stroke Glow", "Section 9", "Black Ops III", "115", "Cyborg",
+	"Loyalty", "Take Out", "Nuketown", "Jungle Cat", "Heat Stroke Red", "Nightmare",
+	"CoD XP", "Contract Crystals", "St Patricks", "Cherry Fizz", "VIP Bubbles", "Soviet Winter Blue",
+	"Honeycomb Amber", "Summertime", "CWL Excellence", "CWL Mindfreak", "CWL NV", "CWL Orbit",
+	"CWL Tainted Minds", "CWL Epsilon", "CWL Infused", "CWL LDLC", "CWL Millenium", "CWL Splyce",
+	"CWL Supremacy", "CWL Cloud9", "CWL Elevate", "CWL EnVyUs", "CWL FaZe", "CWL OpTic",
+	"CWL Rise Nation"
+}
+
+local function CamoSide()
+	return { id = "camo", label = "Camo", cards = {
+		C( 0, "Guns", { T( "Universal Camo", "camo_on" ), CH( "Camo", "camo_gun", Spec.Camos, 2 ), N( "Every gun you hold, picked up ones too." ) } ),
+		C( 1, "Knife", { T( "Knife Camo", "kcamo_on" ), CH( "Camo", "camo_knife", Spec.Camos, 2 ), N( "Only knives that take camos (MP combat knife)." ) } )
+	} }
+end
+
 local function ToolsSide( bring )
 	return { id = "tools", label = "Tools", cards = {
 		C( 0, "Teleport Gun", { T( "Teleport Gun", "telegun" ), N( "Shoot to teleport where it lands." ) } ),
@@ -305,7 +334,8 @@ local function ZMTabs()
 			C( 0, "Current Weapon", { ST( "Holding", "holding" ), ST( "Upgraded", "upgraded" ), B( "Pack-a-Punch" ), B( "Un-Pack" ) } ),
 			C( 1, "Alt Ammo", { CH( "Type", "aat", { "Blast Furnace", "Dead Wire", "Fireworks", "Thunder Wall", "Turned" }, 0 ), B( "Apply to Current" ) } ),
 			C( 2, "All Weapons", { B( "Upgrade All" ), B( "Max Ammo All" ), B( "Take All Weapons", true ) } )
-		} }
+		} },
+		CamoSide()
 	} } )
 
 	local classic, mega = {}, {}
@@ -392,6 +422,11 @@ local function ZMTabs()
 			C( 0, "Items", { T( "Mystery Box", "esp_i_box" ), T( "Pack-a-Punch", "esp_i_pap" ), T( "Perk Machines", "esp_i_perks" ), T( "Wall Weapons", "esp_i_wall" ),
 				T( "Buildable Parts", "esp_i_parts" ), T( "Power-Ups On Ground", "esp_i_pow" ) } ),
 			C( 1, "Style", { CH( "Colour", "esp_c_item", Colors, 3 ), S( "Size", "esp_i_size", { "XS", "S", "M", "L", "XL", "XXL" }, 2 ) } )
+		} },
+		{ id = "chams", label = "Chams", cards = {
+			C( 0, "Zombie Chams", { T( "Enabled", "zc_on" ), CH( "Style", "zc_style", { "Solid", "Through Walls", "Solid + Walls", "Thermal" }, 2 ),
+				CH( "Colour", "zc_col", { "Pink", "Red", "Green", "Cyan", "Gold", "White", "Purple" }, 0 ) } ),
+			C( 1, "About", { N( "Solid: zombies drawn in one flat colour." ), N( "Through Walls: coloured silhouette you can see through walls." ), N( "Thermal: heat-vision look." ) } )
 		} }
 	} } )
 
@@ -471,7 +506,8 @@ local function MPTabs()
 			C( 0, "Optic", { CH( "Optic", "att_optic", { "None", "Reflex", "ELO", "Holo", "Recon", "Thermal", "Varix" }, 0 ) } ),
 			C( 1, "Attachments", att ),
 			C( 2, "Apply", { B( "Apply to Current" ), N( "Unsupported ones are skipped." ) } )
-		} }
+		} },
+		CamoSide()
 	} } )
 
 	local heroes = {}

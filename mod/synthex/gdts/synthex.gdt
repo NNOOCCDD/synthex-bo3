@@ -56,4 +56,144 @@
 		"noPicMip" "1"
 		"streamable" "0"
 	}
+	"sx_cham_pink" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.31"
+		"cg02_z" "0.65"
+		"cg02_w" "1"
+	}
+	"sx_cham_pink_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.31"
+		"cg02_z" "0.65"
+		"cg02_w" "1"
+	}
+	"sx_cham_red" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.12"
+		"cg02_z" "0.12"
+		"cg02_w" "1"
+	}
+	"sx_cham_red_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.12"
+		"cg02_z" "0.12"
+		"cg02_w" "1"
+	}
+	"sx_cham_green" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "0.3"
+		"cg02_y" "1"
+		"cg02_z" "0.4"
+		"cg02_w" "1"
+	}
+	"sx_cham_green_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "0.3"
+		"cg02_y" "1"
+		"cg02_z" "0.4"
+		"cg02_w" "1"
+	}
+	"sx_cham_cyan" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "0.2"
+		"cg02_y" "0.85"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
+	"sx_cham_cyan_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "0.2"
+		"cg02_y" "0.85"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
+	"sx_cham_gold" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.75"
+		"cg02_z" "0.2"
+		"cg02_w" "1"
+	}
+	"sx_cham_gold_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "0.75"
+		"cg02_z" "0.2"
+		"cg02_w" "1"
+	}
+	"sx_cham_white" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "1"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
+	"sx_cham_white_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "1"
+		"cg02_y" "1"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
+	"sx_cham_purple" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model"
+		"surfaceType" "<none>"
+		"cg02_x" "0.62"
+		"cg02_y" "0.3"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
+	"sx_cham_purple_z" ( "material.gdf" )
+	{
+		"materialCategory" "Specialty"
+		"materialType" "hud_outline_model_z"
+		"surfaceType" "<none>"
+		"cg02_x" "0.62"
+		"cg02_y" "0.3"
+		"cg02_z" "1"
+		"cg02_w" "1"
+	}
 }

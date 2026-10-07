@@ -10,6 +10,7 @@
 #using scripts\shared\offmenu\offmenu_common;
 #using scripts\shared\offmenu\offmenu_overlay;
 #using scripts\shared\offmenu\offmenu_fun;
+#using scripts\shared\offmenu\offmenu_camo;
 
 #using scripts\mp\_util;
 #using scripts\mp\gametypes\_globallogic;
@@ -404,6 +405,8 @@ function private build_weapons_tab()
 	self offmenu::card( 2, "Apply" );
 	self offmenu::button( "Apply to Current", &apply_attachments );
 	self offmenu::note( "Unsupported ones are skipped." );
+
+	self offmenu_camo::build_side( "weapons" );
 }
 
 function private attachment_label( a )

@@ -24,6 +24,7 @@
 #using scripts\zm\offmenu_esp;
 #using scripts\zm\offmenu_zm_fun;
 #using scripts\shared\offmenu\offmenu_fun;
+#using scripts\shared\offmenu\offmenu_camo;
 
 #insert scripts\shared\shared.gsh;
 
@@ -60,6 +61,7 @@ function __init__()
 	level.offm_page_fn = &page_data;
 	level.offm_powerup_fn = &spawn_powerup_named;
 	level.offm_item_handlers[ "w_" ] = &item_weapon;
+	level.offm_default_weapon_options = &default_weapon_options;
 	level.offm_item_handlers[ "bgb" ] = &item_bgb;
 	level.offm_item_handlers[ "player" ] = &item_player;
 	level.offm_item_handlers[ "spot" ] = &item_spot;
@@ -385,6 +387,14 @@ function private build_weapons_tab()
 	self offmenu::button( "Upgrade All", &upgrade_all );
 	self offmenu::button( "Max Ammo All", &offmenu_common::max_ammo_all );
 	self offmenu::button( "Take All Weapons", &take_all, undefined, undefined, true );
+
+	self offmenu_camo::build_side( "weapons" );
+}
+
+// Weapons > Camo off: upgraded weapons get their Pack-a-Punch camo back
+function private default_weapon_options( w )
+{
+	return self zm_weapons::get_pack_a_punch_weapon_options( w );
 }
 
 function private aat_names()  { return array( "zm_aat_blast_furnace", "zm_aat_dead_wire", "zm_aat_fire_works", "zm_aat_thunder_wall", "zm_aat_turned" ); }

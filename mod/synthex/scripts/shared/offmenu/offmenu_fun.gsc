@@ -17,6 +17,8 @@ function __init__()
 {
 	// 0 = none, 1.. = filter (see synthex_ui.csc)
 	clientfield::register( "toplayer", "synthex_filter", VERSION_SHIP, 4, "int" );
+	// zombie chams: style * 8 + colour (0 = off), drawn by synthex_ui.csc
+	clientfield::register( "actor", "synthex_zcham", VERSION_SHIP, 6, "int" );
 }
 
 // ---------------------------------------------------------------------------
