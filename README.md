@@ -2,8 +2,7 @@
 
 # SYNTHEX.VIP
 
-An in-game mod menu for **Call of Duty: Black Ops III** — Zombies and Multiplayer custom games, offline or in
-your own private matches. Mouse-driven, wide layout, dark charcoal + dusty pink.
+An in-game mod menu for **Call of Duty: Black Ops III**
 
 ![The menu in Zombies (Der Eisendrache)](docs/menu.jpg)
 
